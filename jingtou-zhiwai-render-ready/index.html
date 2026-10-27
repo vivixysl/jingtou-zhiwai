@@ -40,10 +40,18 @@
 .gate-card button{display:block;width:100%;background:#625275;color:white;padding:13px;border-radius:12px;font-weight:600}
 .gate-card small{font-size:11px;color:#a14a4a;margin-top:8px;display:block}
 @media(max-width:850px){body{padding:0;display:block;background:#171824}.phone{width:100%;max-width:100%;height:100dvh;border:0;border-radius:0;box-shadow:none}.phone:before{top:9px}.status{height:calc(57px + env(safe-area-inset-top,0px));padding-top:calc(12px + env(safe-area-inset-top,0px))}.home-indicator{padding-bottom:env(safe-area-inset-bottom,0px);height:calc(21px + env(safe-area-inset-bottom,0px))}.fict{top:calc(58px + env(safe-area-inset-top,0px))}.home-view{padding-top:18px}}
+
+.device-card{cursor:default;align-items:stretch}
+.device-select{display:flex;flex-direction:column;align-items:flex-start;text-align:left;width:100%;min-height:118px;padding:0;border:0;background:transparent;color:inherit;cursor:pointer;touch-action:manipulation}
+.device-select .avatar{pointer-events:none}
+.device-select strong,.device-select small{pointer-events:none}
+.device-open{font-size:10px;color:#8270aa;margin-top:auto;padding-top:7px;pointer-events:none}
+.device-select:focus-visible{outline:2px solid #9380be;outline-offset:3px}
+.avatar-upload{align-self:flex-start;touch-action:manipulation}
 </style>
 </head>
 <body>
-<aside id="intro"><div class="eyebrow">FOUND PHONE / AI WORLD V0.2</div><h1>镜头之外</h1><div class="chip">平行世界 · 2030年秋 · 临川</div><p>七个人，两组尚未相识的朋友圈。<br>你可以拿起他们的手机，看看聊天、工作、照片、生活，以及尚未发生的相遇。</p><p>现有聊天无需等待，点击「继续一天」才调用 AI。所有七部手机共享同一世界事件账本与时间线。</p><div class="tip">纯观察模式 · 所有私人聊天均为原创虚构<br>iPhone 16 风格 · 私人局域网 · API 密钥不进入网页</div></aside>
+<aside id="intro"><div class="eyebrow">FOUND PHONE / AI WORLD V0.4.1</div><h1>镜头之外</h1><div class="chip">平行世界 · 2030年秋 · 临川</div><p>七个人，两组尚未相识的朋友圈。<br>你可以拿起他们的手机，看看聊天、工作、照片、生活，以及尚未发生的相遇。</p><p>现有聊天无需等待，点击「继续一天」才调用 AI。所有七部手机共享同一世界事件账本与时间线。</p><div class="tip">纯观察模式 · 所有私人聊天均为原创虚构<br>iPhone 16 风格 · 私人局域网 · API 密钥不进入网页</div></aside>
 <div class="phone" id="phone">
  <div id="status" class="status home-status"></div>
  <div class="fict">平行世界 · 虚构</div>
@@ -201,6 +209,25 @@ const EVENTS={
 };
 const PLAYLIST={ding:[['散场以后','私人歌单'],['雨与胶片','通勤'],['旧剧场的灯','睡前']],song:[['一场未写完的梦','写作时'],['慢镜头','下楼买面包'],['夏天的尾音','收藏']],he:[['不加班日记','最近播放'],['走路要听歌','通勤'],['晚一点再说','私人歌单']],ma:[['给秋天的歌','收藏'],['旧时光录音','片单延伸'],['午後的一杯茶','最近播放']],liu:[['长镜头','剪辑参考'],['节奏练习','私人歌单'],['路灯下','通勤']],zhang:[['飞鸟·工作小样','自作曲'],['后台散场','音乐剧收藏'],['钢琴与雨','随便听听']],yan:[['雾面·工程草案','未公开作品'],['模拟磁带','灵感参考'],['凌晨的工作室','最近播放']]};
 const KEY='jingtou-zhwai-ai-v02';
+// Read receipts belong to the observer's browser, not to the fictional characters.
+// Store them separately so the existing cloud-backed owner/day/bookmarks format remains compatible.
+const READ_KEY='jingtou-zhwai-read-v041';
+let readState={};
+try { const v=JSON.parse(localStorage.getItem(READ_KEY)||'{}'); if(v&&typeof v==='object'&&!Array.isArray(v))readState=v; } catch {}
+const messageToken=m=>m[4]?`id:${m[4]}`:`seed:${m[0]}|${m[1]}|${m[2]}|${m[3]}`;
+function storeReadState(){try{localStorage.setItem(READ_KEY,JSON.stringify(readState));}catch{}}
+function markChatRead(id){
+ const full=CG[id]?.messages||[], messages=filtered(full);
+ if(!messages.length)return;
+ const key=`${S.owner}:${id}`;
+ const token=messageToken(messages[messages.length-1]);
+ const oldIndex=full.findIndex(m=>messageToken(m)===readState[key]);
+ const newIndex=full.findIndex(m=>messageToken(m)===token);
+ // Browsing an earlier game date must not undo a later read receipt.
+ if(oldIndex>=newIndex&&oldIndex>=0)return;
+ if(readState[key]!==token){readState[key]=token;storeReadState();}
+}
+
 let persisted={owner:'ding',day:0,bookmarks:[]};try{const stored=JSON.parse(localStorage.getItem(KEY)||'null');if(stored&&CHARACTERS[stored.owner])persisted={...persisted,...stored}}catch{}
 let S={owner:persisted.owner,day:Number.isInteger(Number(persisted.day))&&Number(persisted.day)>=0?Number(persisted.day):0,bookmarks:Array.isArray(persisted.bookmarks)?persisted.bookmarks:[],app:'home',sub:'',chat:'',tab:'chats',wtab:'feed',search:'',imageIndex:0,noteIndex:0,commentId:0,showVoice:{}};
 const WORLD={maxDay:1, avatars:{ding:'/assets/avatars/ding.png',song:'/assets/avatars/song.png',he:'/assets/avatars/he.png',ma:'/assets/avatars/ma.png',liu:'/assets/avatars/liu.png',zhang:'/assets/avatars/zhang.png',yan:'/assets/avatars/yan.png'}, ready:false, busy:false, configured:false, batches:[], status:'pending'};
@@ -222,13 +249,28 @@ const save=()=>{
 const col=id=>(PEOPLE[id]||{color:'#bdaecd'}).color;
 const avatar=(id,group=false,small=false)=>group?`<div class="avatar group">${h(CG[id].emoji||'👥')}</div>`:`<div class="avatar ${WORLD.avatars[id]?'has-photo':''}" style="--avatar-bg:${col(id)}">${WORLD.avatars[id]?`<img src="${h(WORLD.avatars[id])}" loading="lazy" alt="${h(displayName(id))}头像"/>`:h(PEOPLE[id]?.initial||'人')}</div>`;
 const displayName=id=>PEOPLE[id]?.name||id;
-const counter=id=>{const nums={girls:3,boys:2,ding_song:1,he_zhou:1,ma_agent:1,liu_prod:1,zhang_stage:1,yan_label:1};return nums[id]||0};
+const counter=id=>{
+ const c=CG[id];if(!c)return 0;
+ const msgs=filtered(c.messages);
+ if(!msgs.length)return 0;
+ const token=readState[`${S.owner}:${id}`];
+ if(token){
+  const idx=c.messages.findIndex(m=>messageToken(m)===token);
+  if(idx>=0)return Math.min(99,c.messages.slice(idx+1).filter(m=>m[0]<=nowDate()&&m[2]!==S.owner).length);
+ }
+ // Older preloaded conversations have a small number of initial unread messages.
+ const initial={girls:3,boys:2,ding_song:1,he_zhou:1,ma_agent:1,liu_prod:1,zhang_stage:1,yan_label:1};
+ const added=msgs.filter(m=>m.length>4&&m[4]&&m[2]!==S.owner).length;
+ return Math.min(99,(initial[id]||0)+added);
+};
+function wechatUnread(){return Math.min(99,visibleChats().reduce((sum,{id})=>sum+counter(id),0));}
+
 function persistToast(msg){const t=$('toast');t.textContent=msg;t.hidden=false;clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.hidden=true,1700)}
 function appIcon(kind,sym,label,click,unread=''){return `<button class="app-tile" data-action="${click}"><div class="app-icon" data-kind="${kind}">${sym}${unread?`<span class="icon-unread">${unread}</span>`:''}</div><span>${label}</span></button>`}
 function bar(title,back='home',actions=''){return `<header class="bar"><div class="bar-side"><button class="nav-btn" data-action="${back}" aria-label="返回"><span class="arrow">‹</span> 返回</button></div><div class="bar-title">${h(title)}</div><div class="bar-side right">${actions}</div></header>`}
 function bottomTabs(items,active){return `<div class="tabbar">${items.map(x=>`<button class="tab-btn ${x[0]===active?'active':''}" data-action="${x[2]}"><span class="tab-emoji">${x[3]}</span>${h(x[1])}</button>`).join('')}</div>`}
 function home(){
-const c=CHARACTERS[S.owner],apps=[['wechat','☏','微信','app:wechat','3'],['weibo','◎','微博','app:weibo',''],['albums','✿','相册','app:albums',''],['notes','▤','备忘录','app:notes',''],['calendar','12','日历','app:calendar',''],['music','♫','音乐','app:music',''],['journal','✎','我的手账','app:journal',''],['devices','⇄','切换手机','app:devices','']];
+const c=CHARACTERS[S.owner],apps=[['wechat','☏','微信','app:wechat',wechatUnread()?String(wechatUnread()):''],['weibo','◎','微博','app:weibo',''],['albums','✿','相册','app:albums',''],['notes','▤','备忘录','app:notes',''],['calendar','12','日历','app:calendar',''],['music','♫','音乐','app:music',''],['journal','✎','我的手账','app:journal',''],['devices','⇄','切换手机','app:devices','']];
 const progress=S.day<WORLD.maxDay?'查看下一天':S.day<1?'查看已预装的10月13日':'✦ AI 继续下一天';
 const badge=WORLD.busy?'AI 正在续写…':WORLD.ready?(WORLD.configured?'API Key 已配置 · 按需生成':'尚未配置 API Key'):'连接世界中…';
 return `<div class="home-view" style="--wall1:${c.wall[0]};--wall2:${c.wall[1]}"><div class="home-date"><div class="clock">${timeNow()}</div><div class="day">${dayLong()}</div></div><div class="home-greeting"><div><b>${h(c.name)}的 iPhone 16</b><span>${h(c.greeting)}</span></div><div class="mode-mark">◌ 观察档</div></div><div class="app-grid">${apps.map(a=>appIcon(...a)).join('')}</div><div class="advance-card"><div class="engine-status ${WORLD.busy?'pending':WORLD.ready&&WORLD.configured?'online':WORLD.status==='error'?'error':'pending'}"><i class="dot"></i>${h(badge)}</div><p>翻阅已有内容不消耗 API。只有推进到新的一天才生成故事，并会永久保存到世界账本。</p><button data-action="advance" ${WORLD.busy?'disabled':''}>${WORLD.busy?'正在生成，请继续翻别的 App…':progress}</button></div><div class="dock">${apps.filter((a,i)=>[0,1,6,7].includes(i)).map(a=>`<button aria-label="${a[2]}" data-action="${a[3]}"><div class="app-icon" data-kind="${a[0]}">${a[1]}</div></button>`).join('')}</div></div>`}
@@ -257,10 +299,10 @@ function music(){return `<section class="app-view">${bar('音乐','home')}<div c
 function journal(){return `<section class="app-view">${bar('我的手账','home')}<div class="scroll"><div class="journal-intro">这里存放的是你作为旁观者收藏的虚构聊天片段。不会修改机主手机或改变人物关系。<br>收藏保存在当前浏览器；如果担心浏览器清理数据，可以导出 JSON 备份。</div>${S.bookmarks.length?S.bookmarks.map((b,i)=>`<div class="journal-row"><div><span>${h(b.owner)}的手机 · ${h(b.date)} · ${h(b.chat)}</span>${h(b.sender)}：${h(b.text)}</div><button data-action="remove:${i}">取消收藏</button></div>`).join(''):'<div class="empty">还没有收藏的片段。<br>打开微信聊天，点消息旁的 ☆ 就能收藏。</div>'}<button class="primary-action" data-action="export">↓ 导出手账 JSON</button></div></section>`}
 function devices(){
 const days=Array.from({length:WORLD.maxDay+1},(_,d)=>`<button data-action="day:${d}" class="${S.day===d?'selected':''}">${dateFor(d).replace('-','月')}日</button>`).join('');
-return `<section class="app-view devices-view">${bar('切换手机','home')}<div class="scroll"><div class="device-intro"><h2>七部手机，共用一个世界</h2><p>两组既存朋友圈，职业轨道独立展开。<br>无论切换哪部手机，都不会重写已经发生的事情。</p></div><div class="device-grid">${Object.entries(CHARACTERS).map(([id,c])=>`<div class="device-card ${S.owner===id?'chosen':''}">${avatar(id)}<div style="flex:1"><button data-action="owner:${id}" style="border:0;background:none;text-align:left;padding:0;display:block"><strong>${h(c.name)}</strong><small>${h(c.job)}</small></button><button class="avatar-upload" data-action="pickavatar:${id}">${WORLD.avatars[id]?'更换头像':'导入头像'}</button></div></div>`).join('')}</div><div class="day-switch"><h3>世界时间</h3><p>10月12日至13日为预装历史。从10月14日起，每点击一次才由 AI 续写一天，不会因为打开微信自动跳时间。</p><div class="options">${days}</div><button class="advance-wide" style="margin-top:14px;background:#544b72;color:white" data-action="advance" ${WORLD.busy?'disabled':''}>${WORLD.busy?'AI 正在续写…':S.day<WORLD.maxDay?'查看下一天':'✦ 继续一天'}</button><p>AI：${WORLD.ready?(WORLD.configured?'已配置':'未配置'):'连接中'} · ${h(WORLD.model||'')}</p><button data-action="backup">↓ 导出世界事件备份 JSON</button></div><div style="height:30px"></div></div></section>`}
+return `<section class="app-view devices-view">${bar('切换手机','home')}<div class="scroll"><div class="device-intro"><h2>七部手机，共用一个世界</h2><p>两组既存朋友圈，职业轨道独立展开。<br>无论切换哪部手机，都不会重写已经发生的事情。</p></div><div class="device-grid">${Object.entries(CHARACTERS).map(([id,c])=>`<div class="device-card ${S.owner===id?'chosen':''}"><button class="device-select" data-action="owner:${id}" aria-label="打开${h(c.name)}的手机">${avatar(id)}<strong>${h(c.name)}</strong><small>${h(c.job)}</small><span class="device-open">${S.owner===id?'当前手机':'点此进入 ↗'}</span></button><button class="avatar-upload" data-action="pickavatar:${id}">${WORLD.avatars[id]?'更换头像':'导入头像'}</button></div>`).join('')}</div><div class="day-switch"><h3>世界时间</h3><p>10月12日至13日为预装历史。从10月14日起，每点击一次才由 AI 续写一天，不会因为打开微信自动跳时间。</p><div class="options">${days}</div><button class="advance-wide" style="margin-top:14px;background:#544b72;color:white" data-action="advance" ${WORLD.busy?'disabled':''}>${WORLD.busy?'AI 正在续写…':S.day<WORLD.maxDay?'查看下一天':'✦ 继续一天'}</button><p>AI：${WORLD.ready?(WORLD.configured?'已配置':'未配置'):'连接中'} · ${h(WORLD.model||'')}</p><button data-action="backup">↓ 导出世界事件备份 JSON</button></div><div style="height:30px"></div></div></section>`}
 function render(){const isHome=S.app==='home';$('status').className=`status ${isHome?'home-status':'app-status'}`;$('status').innerHTML=`<span>${timeNow()}</span><span class="icons">▮▮▮ ᴡɪꜰɪ ▰</span>`;$('indicator').className=`home-indicator ${isHome?'home-bottom':''}`;const routes={home,wechat,chat:chatView,weibo,albums:album,photo,notes,note,calendar,music,journal,devices};$('view').innerHTML=(routes[S.app]||home)();if(S.app==='chat'){const sc=$('message-scroll');requestAnimationFrame(()=>{if(sc)sc.scrollTop=sc.scrollHeight})}}
 function goto(app){S.app=app;S.search='';render()}
-function handle(action){const [name,arg]=action.split(':');if(name==='advance'){advanceDay();return}if(name==='pickavatar'){pickAvatar(arg);return}if(name==='backup'){downloadBackup();return}if(name==='app'){if(arg==='wechat')S.tab='chats';if(arg==='weibo')S.wtab='feed';goto(arg);return}if(name==='home'){goto('home');return}if(name==='back'){goto(arg);return}if(name==='chat'){S.chat=arg;goto('chat');return}if(name==='tab'){S.tab=arg;S.search='';render();return}if(name==='wtab'){S.wtab=arg;render();return}if(name==='owner'){S.owner=arg;save();goto('home');return}if(name==='day'){S.day=Math.min(WORLD.maxDay,Math.max(0,Number(arg)));save();render();return}if(name==='photo'){S.imageIndex=Number(arg);goto('photo');return}if(name==='note'){S.noteIndex=Number(arg);goto('note');return}if(name==='bookmark'){
+function handle(action){const [name,arg]=action.split(':');if(name==='advance'){advanceDay();return}if(name==='pickavatar'){pickAvatar(arg);return}if(name==='backup'){downloadBackup();return}if(name==='app'){if(arg==='wechat')S.tab='chats';if(arg==='weibo')S.wtab='feed';goto(arg);return}if(name==='home'){goto('home');return}if(name==='back'){goto(arg);return}if(name==='chat'){S.chat=arg;markChatRead(arg);goto('chat');return}if(name==='tab'){S.tab=arg;S.search='';render();return}if(name==='wtab'){S.wtab=arg;render();return}if(name==='owner'){if(!CHARACTERS[arg])return;S.owner=arg;S.chat='';S.tab='chats';S.search='';save();goto('home');return}if(name==='day'){S.day=Math.min(WORLD.maxDay,Math.max(0,Number(arg)));save();render();return}if(name==='photo'){S.imageIndex=Number(arg);goto('photo');return}if(name==='note'){S.noteIndex=Number(arg);goto('note');return}if(name==='bookmark'){
  const chat=CG[S.chat],index=Number(arg),m=filtered(chat.messages)[index];if(!m)return;const id=`${S.chat}:${m[0]}:${m[1]}:${m[2]}:${index}`;const pos=S.bookmarks.findIndex(x=>x.id===id);if(pos>=0){S.bookmarks.splice(pos,1);persistToast('已取消收藏')}else{S.bookmarks.push({id,owner:CHARACTERS[S.owner].name,date:m[0]+' '+m[1],chat:chatTitle(S.chat),sender:displayName(m[2]),text:m[3]});persistToast('已收藏到我的手账')}save();const sc=$('message-scroll'),v=sc?.scrollTop;render();if($('message-scroll'))$('message-scroll').scrollTop=v;return
  }if(name==='remove'){S.bookmarks.splice(Number(arg),1);save();render();return}if(name==='comments'){S.commentId=S.commentId===arg?'':arg;let scroll=$('view').querySelector('.scroll'),pos=scroll?.scrollTop;render();if($('view').querySelector('.scroll'))$('view').querySelector('.scroll').scrollTop=pos;return}if(name==='hot'){persistToast('虚构热搜话题 · 试玩档暂仅展示榜单');return}if(name==='track'){persistToast('试听功能留待正式版本');return}if(name==='export'){const b=new Blob([JSON.stringify({game:'镜头之外·观察档',bookmarks:S.bookmarks},null,2)],{type:'application/json'});const url=URL.createObjectURL(b);let a=document.createElement('a');a.href=url;a.download='镜头之外-我的手账.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);persistToast('手账已导出');return}}
 $('view').addEventListener('click',e=>{const el=e.target.closest('[data-action]');if(el)handle(el.dataset.action)});
