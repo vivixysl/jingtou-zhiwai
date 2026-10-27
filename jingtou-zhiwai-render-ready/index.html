@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#171824" /><meta name="apple-mobile-web-app-capable" content="yes" /><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" /><meta name="apple-mobile-web-app-title" content="镜头之外" /><link rel="apple-touch-icon" href="/assets/icon.png"/><link rel="manifest" href="/manifest.json"/>
+<title>镜头之外 · AI 世界引擎 V0.3</title>
+<style>
+:root{--ink:#262633;--muted:#8d8e9c;--line:#e9e9ed;--paper:#fff;--mint:#34b37c;--shadow:0 30px 85px rgba(19,19,40,.28)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{height:100%;margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink)}body{background:radial-gradient(circle at 18% 16%,#eee0f8,transparent 34%),radial-gradient(circle at 80% 82%,#e0eaf7,transparent 38%),#f3f1f6;display:flex;justify-content:center;align-items:center;gap:50px;padding:26px;overflow:hidden}button,input{font:inherit}button{cursor:pointer;border:0}button:focus-visible,input:focus-visible{outline:3px solid #ad9fe8;outline-offset:2px}#intro{width:min(370px,31vw)}#intro .eyebrow{font-size:11px;letter-spacing:.2em;color:#8a8298;font-weight:700}#intro h1{font-size:43px;line-height:1.18;letter-spacing:.055em;font-weight:600;margin:12px 0 16px;color:#322c40}#intro p{font-size:14px;color:#6e687b;line-height:1.95;margin:0 0 18px}#intro .chip{display:inline-block;border:1px solid #d8d1e5;padding:7px 11px;border-radius:100px;font-size:11px;color:#756b88;margin-bottom:24px}.tip{font-size:12px;color:#9692a2;line-height:1.8;margin-top:18px}.phone{width:min(412px,100%);height:min(850px,95dvh);flex:none;background:#11121a;border:8px solid #272730;border-radius:46px;position:relative;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}.phone:before{content:"";position:absolute;z-index:8;top:8px;left:50%;transform:translateX(-50%);background:#11121a;width:102px;height:24px;border-radius:0 0 15px 15px;pointer-events:none}.status{height:40px;flex:none;padding:10px 22px 6px;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;position:relative;z-index:5}.status .icons{font-size:11px;letter-spacing:1px}.status.home-status{background:transparent;color:#403c55}.status.app-status{background:#f8f8f8;color:#222}.phone-body{flex:1;min-height:0;position:relative;overflow:hidden}.home-view{height:100%;overflow:auto;background:linear-gradient(145deg,var(--wall1),var(--wall2));padding:30px 20px 20px}.home-date{text-align:center;padding:30px 0 25px;color:#383348}.home-date .clock{font-size:65px;font-weight:200;letter-spacing:-.06em;line-height:1}.home-date .day{font-size:13px;letter-spacing:.07em;margin-top:11px}.home-greeting{padding:14px 16px;border-radius:19px;background:#ffffff87;backdrop-filter:blur(20px);margin-bottom:30px;box-shadow:0 5px 30px #fff3;display:flex;justify-content:space-between;gap:10px;align-items:center}.home-greeting b{display:block;font-size:14px}.home-greeting span{font-size:11px;color:#635d75;display:block;margin-top:4px}.mode-mark{display:inline-flex;gap:5px;align-items:center;padding:5px 8px;background:#ffffff80;border-radius:50px;font-size:10px;color:#827794;white-space:nowrap}.app-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:25px 10px}.app-tile{background:none;color:#4e4959;display:flex;align-items:center;flex-direction:column;gap:7px;font-size:12px;min-width:0}.app-icon{width:58px;height:58px;border-radius:15px;background:white;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px #00000010;font-size:27px;color:white;position:relative}.app-icon[data-kind=wechat]{background:#33c171}.app-icon[data-kind=weibo]{background:#f39a52}.app-icon[data-kind=albums]{background:linear-gradient(145deg,#f7c6d9,#a6b5f3)}.app-icon[data-kind=notes]{background:linear-gradient(#ffd980 0 28%,#fffdfa 28%)}.app-icon[data-kind=calendar]{background:linear-gradient(#ef6a6a 0 30%,#fff 30%);color:#ef6a6a}.app-icon[data-kind=music]{background:linear-gradient(145deg,#fc9e9d,#e66caf)}.app-icon[data-kind=journal]{background:linear-gradient(145deg,#9a96da,#6a77ba)}.app-icon[data-kind=devices]{background:linear-gradient(145deg,#545e89,#282c4b)}.icon-unread{position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;padding:0 4px;border-radius:10px;background:#f3636c;color:white;font-size:10px;display:flex;align-items:center;justify-content:center;border:1px solid white}.dock{margin-top:33px;display:flex;justify-content:space-evenly;align-items:center;background:#ffffff7d;border-radius:24px;padding:12px 5px;backdrop-filter:blur(20px)}.dock button{background:none}.dock .app-icon{width:54px;height:54px}.home-indicator{height:21px;flex:none;display:flex;align-items:center;justify-content:center;background:#f8f8f8}.home-indicator.home-bottom{background:transparent}.home-indicator i{width:110px;height:4px;border-radius:20px;background:#555b65}.home-bottom i{background:#58536b}.app-view{background:#f6f6f7;height:100%;display:flex;flex-direction:column;min-height:0}.bar{height:51px;display:flex;align-items:center;justify-content:space-between;flex:none;background:#f8f8f8;padding:0 10px 0 8px;border-bottom:1px solid #eaeaea}.bar-title{font-size:17px;font-weight:600;max-width:210px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.bar-side{min-width:70px;display:flex;align-items:center;justify-content:flex-start}.bar-side.right{justify-content:flex-end}.nav-btn{background:transparent;color:#42434a;padding:8px 10px;font-size:13px}.nav-btn .arrow{font-size:26px;font-weight:200;line-height:12px;vertical-align:-2px}.nav-icon{font-size:22px;background:transparent;padding:5px 10px;color:#333}.scroll{flex:1;overflow-y:auto;min-height:0;overscroll-behavior:contain;scrollbar-width:thin}.tabbar{height:61px;flex:none;background:#fafafa;display:flex;justify-content:space-around;align-items:center;border-top:1px solid #e9e9ec}.tab-btn{display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;color:#8c8c93;background:none;font-size:10px;min-width:60px}.tab-btn .tab-emoji{font-size:21px}.tab-btn.active{color:#20a96f}.search-wrap{padding:9px 11px 11px}.search-field{border:0;border-radius:11px;background:#e8e8ed;width:100%;padding:10px 13px;font-size:13px;outline:none}.search-field::placeholder{color:#999}.chat-list,.feed-list{background:white}.chat-row{padding:12px 15px;display:flex;align-items:center;gap:12px;background:#fff;width:100%;text-align:left;border-bottom:1px solid #f0f0f2;min-height:72px}.chat-row:hover,.contact-row:hover{background:#f8f8fa}.avatar{flex:none;width:46px;height:46px;border-radius:12px;background:var(--avatar-bg,#c4b7df);display:flex;justify-content:center;align-items:center;font-weight:600;color:white;font-size:16px;letter-spacing:.02em}.avatar.group{background:linear-gradient(145deg,#d7c0e1,#a7b7da);font-size:20px}.chat-main{flex:1;min-width:0}.chat-title-line{display:flex;align-items:baseline;justify-content:space-between;gap:6px}.chat-name{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#25242a}.chat-date{font-size:10px;color:#b1b1b6;flex:none}.chat-preview-line{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:7px}.preview{font-size:12px;color:#a3a3a9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.unread{background:#f05a59;color:#fff;min-width:18px;height:18px;border-radius:12px;font-size:10px;display:flex;align-items:center;justify-content:center;flex:none}.chat-bg{background:#ededee}.message-scroll{padding:15px 12px 22px}.stamp{text-align:center;color:#b2b2b7;font-size:11px;margin:12px 0 17px}.message-line{display:flex;align-items:flex-start;gap:8px;margin:12px 0}.message-line.own{flex-direction:row-reverse}.message-line .avatar{width:35px;height:35px;font-size:12px;border-radius:8px}.message-wrap{max-width:74%;min-width:0}.sender{color:#a2a2a6;font-size:10px;margin:0 0 4px 3px}.message-line.own .sender{text-align:right}.bubble{display:inline-block;border-radius:8px;background:#fff;font-size:14px;line-height:1.65;padding:9px 11px;word-break:break-word;white-space:pre-wrap;position:relative;color:#28282d}.own .bubble{background:#9ee77e}.message-actions{display:inline-flex;vertical-align:middle;margin:3px 5px}.bookmark{border-radius:50%;background:transparent;color:#b4b0ba;font-size:15px;padding:3px}.bookmark.saved{color:#e7a83b}.compose-readonly{background:#fafafa;display:flex;align-items:center;gap:8px;min-height:61px;padding:10px 12px;color:#a6a6ac;font-size:12px;border-top:1px solid #ddd}.read-only-field{border-radius:7px;height:37px;background:#f0f0f1;border:1px solid #e8e8e9;flex:1;display:flex;align-items:center;padding-left:11px;color:#b5b5bd}.section-heading{font-size:11px;color:#9a96a5;padding:16px 16px 9px;background:#f7f7f9}.contact-row{background:#fff;border-bottom:1px solid #f2f2f3;width:100%;display:flex;align-items:center;gap:12px;padding:10px 15px;text-align:left}.contact-row strong{font-size:14px;font-weight:500}.mini-meta{font-size:11px;color:#aaa6b3;margin-top:5px;line-height:1.4}.screen-card{padding:15px 17px;background:white;border-bottom:1px solid #eeedf0}.moments{background:#fff}.moment-hero{height:180px;background:linear-gradient(130deg,#5d526d,#be9fb4 49%,#b8b9d8);position:relative;padding:14px;color:white;display:flex;justify-content:flex-end;align-items:flex-end}.moment-title{font-size:21px;font-weight:600;text-shadow:0 2px 10px #0005}.moments .post{display:flex;gap:10px;padding:15px;border-bottom:1px solid #f0f0f0}.moments .post p{font-size:13px;line-height:1.7;margin:8px 0;color:#474750}.moments .post .name{font-size:13px;color:#4a699c;font-weight:600}.moments .post .date{font-size:10px;color:#aaa}.weibo-head{background:white;padding:16px;display:flex;flex-direction:column;gap:5px;border-bottom:1px solid #eee}.weibo-head strong{font-size:22px}.weibo-head span{font-size:12px;color:#96919e}.weibo-tabs{display:flex;justify-content:space-around;background:#fff;border-bottom:1px solid #eee}.weibo-tabs button{background:transparent;padding:13px;font-weight:600;color:#62616b}.weibo-tabs button.active{color:#f18b4c;border-bottom:2px solid #f18b4c}.post-card{padding:15px 14px;margin-bottom:9px;background:#fff}.post-top{display:flex;gap:10px;align-items:center;margin-bottom:11px}.post-top .avatar{width:38px;height:38px;border-radius:50%;font-size:13px}.post-author{font-size:13px;font-weight:600}.post-meta{color:#aaa;font-size:10px;margin-top:3px}.post-text{font-size:14px;line-height:1.85;white-space:pre-wrap;margin:10px 0 13px;word-break:break-word}.post-foot{display:flex;justify-content:space-around;border-top:1px solid #f0f0f0;padding-top:12px;color:#999;font-size:12px}.post-foot button{color:#8e8995;background:none;font-size:12px}.comment-box{background:#f7f7fa;border-radius:9px;padding:10px;margin-top:10px;font-size:12px;line-height:1.75;color:#656172}.hot-row{display:flex;align-items:center;gap:12px;background:#fff;border-bottom:1px solid #f3f3f3;padding:16px 15px;text-align:left;width:100%}.hot-rank{font-size:17px;font-weight:700;color:#e1a05b;width:20px}.hot-row .hot-title{font-size:14px;font-weight:500;flex:1}.hot-row .hot-meta{font-size:10px;color:#aaa}.small-orange{font-size:10px;background:#ffe6d5;color:#ef8a50;padding:2px 4px;border-radius:4px}.album-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;background:#fff;padding:2px}.album-item{border:0;aspect-ratio:1;background:linear-gradient(135deg,var(--ph1),var(--ph2));font-size:44px;display:flex;align-items:center;justify-content:center;position:relative}.album-item span{filter:drop-shadow(0 4px 8px #0002)}.detail-photo{aspect-ratio:1;width:min(100%,360px);border-radius:6px;background:linear-gradient(135deg,var(--ph1),var(--ph2));display:flex;align-items:center;justify-content:center;font-size:94px;margin:18px auto 15px}.photo-info{padding:0 18px 20px}.photo-info h3{margin:0 0 9px;font-weight:600}.photo-info p{font-size:13px;color:#7a7781;line-height:1.8}.note-row{display:block;text-align:left;width:100%;border-bottom:1px solid #eeeeef;background:#fff;padding:18px 18px}.note-row strong{display:block;font-size:15px;margin-bottom:8px}.note-row span{font-size:12px;color:#aaa}.note-detail{padding:28px 22px;background:#fff;min-height:100%;white-space:pre-wrap;line-height:2;font-size:15px}.note-detail h2{margin:0 0 10px;font-size:22px}.event-row{display:flex;gap:14px;border-bottom:1px solid #eee;background:#fff;padding:16px;align-items:stretch}.event-time{width:57px;font-size:13px;font-weight:600;color:#9c8bbb}.event-info{flex:1}.event-info strong{font-size:14px;font-weight:600}.event-info p{font-size:12px;color:#90909d;line-height:1.6;margin:5px 0}.music-header{text-align:center;padding:34px 16px 20px}.record{width:150px;height:150px;margin:0 auto 24px;background:radial-gradient(circle at center,#dcd4e5 0 10%,#55516b 11% 13%,#27263b 14% 25%,#3b394e 26% 27%,#252436 28% 51%,#44425a 52% 53%,#232230 54%);border-radius:50%;box-shadow:0 14px 35px #0002}.music-row{display:flex;align-items:center;gap:13px;padding:14px 20px;border-bottom:1px solid #eee;background:#fff}.music-num{font-size:11px;color:#aaa;width:15px}.music-row strong{font-size:14px}.music-row p{font-size:11px;color:#999;margin:5px 0}.journal-intro{background:#faf8ff;padding:17px;border-bottom:1px solid #eee;color:#7a6e92;font-size:12px;line-height:1.8}.journal-row{display:flex;gap:8px;align-items:flex-start;background:#fff;padding:14px;border-bottom:1px solid #eee}.journal-row div{flex:1;font-size:13px;line-height:1.7}.journal-row span{font-size:10px;color:#999;display:block}.journal-row button{background:#f4f0fa;border-radius:20px;padding:6px 9px;font-size:11px;color:#7b6d9a}.primary-action{width:calc(100% - 30px);margin:16px 15px;padding:14px;background:#655c84;color:#fff;border-radius:12px;font-size:13px}.devices-view{background:linear-gradient(140deg,#faf7ff,#eff0f9)}.device-intro{text-align:center;padding:22px 18px 14px}.device-intro h2{font-size:22px;margin:0 0 10px}.device-intro p{font-size:12px;color:#8c8499;line-height:1.7}.device-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:12px 17px 25px}.device-card{min-height:136px;border:1px solid #ece5f2;border-radius:19px;background:#fff9;text-align:left;padding:16px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .12s,border-color .12s}.device-card:active{transform:scale(.98)}.device-card.chosen{border-color:#9380be;box-shadow:0 0 0 2px #ac9ac52b}.device-card .avatar{width:46px;height:46px;border-radius:16px}.device-card strong{font-size:14px;display:block;margin-top:7px}.device-card small{font-size:11px;color:#8c849c}.day-switch{margin:6px 16px 0;padding:14px;border:1px solid #e8e3ef;background:#ffffffb3;border-radius:16px}.day-switch h3{font-size:13px;margin:0 0 5px}.day-switch p{font-size:11px;color:#958c9f;line-height:1.65}.day-switch .options{display:flex;gap:8px;margin-top:12px}.day-switch button{padding:9px 11px;background:#efedf4;color:#777087;border-radius:9px;font-size:11px}.day-switch button.selected{background:#695d8d;color:white}.toast{position:absolute;left:50%;bottom:47px;transform:translateX(-50%);max-width:83%;padding:10px 15px;color:white;background:#2c2b35dd;border-radius:13px;box-shadow:0 10px 25px #0003;text-align:center;font-size:12px;z-index:20;pointer-events:none}.empty{padding:55px 20px;text-align:center;color:#aaa5af;font-size:13px;line-height:1.8}.fict{position:absolute;right:17px;top:42px;color:#a3a3af;font-size:9px;z-index:7;pointer-events:none;opacity:.58}.debug-hidden{display:none}@media(max-width:850px){body{padding:0;display:block;background:#171824}#intro{display:none}.phone{width:100%;height:100dvh;border:0;border-radius:0;box-shadow:none}.phone:before{top:0}.status{padding-left:26px;padding-right:26px}.home-view{padding-top:18px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* V0.2 / iPhone 16 silhouette */
+.phone{width:min(393px,100%);height:min(852px,95dvh);border-radius:59px;border:8px solid #24242c}
+.phone:before{top:10px;width:112px;height:28px;border-radius:21px;background:#101016;box-shadow:0 0 0 2px #17171c}
+.status{height:57px;padding:12px 31px 6px;align-items:center}
+.fict{top:58px;right:14px;font-size:8px}
+.avatar.has-photo{overflow:hidden;background:transparent!important}
+.avatar.has-photo img{display:block;width:100%;height:100%;object-fit:cover}
+.device-card{min-height:72px}
+.device-card .avatar{border-radius:16px;width:50px;height:50px}
+.avatar-upload{display:inline-block;margin:7px 0 2px;padding:5px 9px;background:#ebe6f0;border-radius:8px;color:#725c83;font-size:10px}
+.advance-card{margin:21px 0 0;padding:15px 16px;border-radius:18px;background:#ffffffb0;backdrop-filter:blur(12px);color:#4a4356}
+.advance-card p{font-size:11px;line-height:1.55;color:#776d84;margin:6px 0 12px}
+.advance-card button,.advance-wide{width:100%;background:#3e3654;color:white;border-radius:12px;padding:12px 10px;font-size:13px;font-weight:600}
+.advance-card button:disabled,.advance-wide:disabled{opacity:.5}
+.engine-status{display:inline-flex;align-items:center;gap:5px;font-size:10px;color:#665b75}
+.engine-status .dot{width:6px;height:6px;border-radius:50%;background:#a3a0aa}
+.engine-status.online .dot{background:#34b47e}
+.engine-status.pending .dot{background:#e4a44a}
+.engine-status.error .dot{background:#d97e7b}
+.day-switch .options{flex-wrap:wrap}
+.day-switch button{min-width:95px}
+#gate{position:absolute;inset:0;z-index:80;background:#181925ed;display:flex;align-items:center;justify-content:center;padding:28px;backdrop-filter:blur(14px)}
+#gate[hidden]{display:none}
+.gate-card{background:#fff;width:100%;border-radius:24px;padding:30px 22px;text-align:center;color:#393040}
+.gate-kicker{font-size:9px;letter-spacing:2px;color:#ac99be}
+.gate-card h2{font-size:25px;font-weight:550;margin:11px 0}
+.gate-card p{font-size:12px;line-height:1.9;color:#827a89}
+.gate-card input{width:100%;padding:13px 12px;border-radius:12px;border:1px solid #ddd3e4;text-align:center;font-size:16px;margin:12px 0}
+.gate-card button{display:block;width:100%;background:#625275;color:white;padding:13px;border-radius:12px;font-weight:600}
+.gate-card small{font-size:11px;color:#a14a4a;margin-top:8px;display:block}
+@media(max-width:850px){body{padding:0;display:block;background:#171824}.phone{width:100%;max-width:100%;height:100dvh;border:0;border-radius:0;box-shadow:none}.phone:before{top:9px}.status{height:calc(57px + env(safe-area-inset-top,0px));padding-top:calc(12px + env(safe-area-inset-top,0px))}.home-indicator{padding-bottom:env(safe-area-inset-bottom,0px);height:calc(21px + env(safe-area-inset-bottom,0px))}.fict{top:calc(58px + env(safe-area-inset-top,0px))}.home-view{padding-top:18px}}
+</style>
+</head>
+<body>
+<aside id="intro"><div class="eyebrow">FOUND PHONE / AI WORLD V0.2</div><h1>镜头之外</h1><div class="chip">平行世界 · 2030年秋 · 临川</div><p>七个人，两组尚未相识的朋友圈。<br>你可以拿起他们的手机，看看聊天、工作、照片、生活，以及尚未发生的相遇。</p><p>现有聊天无需等待，点击「继续一天」才调用 AI。所有七部手机共享同一世界事件账本与时间线。</p><div class="tip">纯观察模式 · 所有私人聊天均为原创虚构<br>iPhone 16 风格 · 私人局域网 · API 密钥不进入网页</div></aside>
+<div class="phone" id="phone">
+ <div id="status" class="status home-status"></div>
+ <div class="fict">平行世界 · 虚构</div>
+ <main id="view" class="phone-body"></main>
+ <div id="indicator" class="home-indicator home-bottom"><i></i></div>
+ <div id="toast" class="toast" hidden></div><input id="avatar-picker" type="file" accept="image/png,image/jpeg,image/webp" hidden/><div id="gate" hidden><section class="gate-card"><span class="gate-kicker">PRIVATE WORLD</span><h2>镜头之外</h2><p>请输入 Mac 启动窗口显示的游戏 PIN。<br>这里只验证访问权限，不需要填写 OpenAI API Key。</p><input id="pin-input" type="password" inputmode="numeric" placeholder="游戏访问 PIN" autocomplete="off"/><button id="pin-submit">进入手机</button><small id="pin-error"></small></section></div>
+</div>
+<script>
+'use strict';
+const CHARACTERS={
+ ding:{name:'丁程鑫',job:'青年演员',initial:'丁',color:'#bda2cd',wall:['#eaddec','#d7e0f1'],greeting:'今天也好好吃饭了吗？',handle:'@小丁在路上',bio:'演员｜不是每条微博都关于工作'},
+ song:{name:'宋亚轩',job:'青年编剧',initial:'宋',color:'#a2c5d2',wall:['#dcecf3','#ecddf1'],greeting:'第十七页，暂时不翻篇。',handle:'@亚轩写写写',bio:'编剧｜故事经常写到一半饿了'},
+ he:{name:'贺峻霖',job:'艺人经纪人',initial:'贺',color:'#c5a4af',wall:['#f0e1e3','#e4d8ee'],greeting:'周末也是有工作群的。',handle:'@小贺慢慢说',bio:'经纪人｜热爱准点下班但不常成功'},
+ ma:{name:'马嘉祺',job:'电影演员',initial:'马',color:'#9fa7b9',wall:['#e0e5ec','#cdd8db'],greeting:'工作之外，先喝杯热茶。',handle:'@马嘉祺的日常本',bio:'演员｜偶尔出现'},
+ liu:{name:'刘耀文',job:'新锐导演',initial:'刘',color:'#a3b3a4',wall:['#e0e9d9','#c6d5cd'],greeting:'今天的计划：少改两版。',handle:'@刘导的分镜本',bio:'电影导演｜拍到满意为止'},
+ zhang:{name:'张真源',job:'作曲 / 音乐剧创作人',initial:'张',color:'#a3a0c8',wall:['#dfdef1','#d7e5ef'],greeting:'剧场见。',handle:'@张真源记音符',bio:'写歌、做剧场、偶尔做饭'},
+ yan:{name:'严浩翔',job:'创作歌手 / 制作人',initial:'严',color:'#a69faa',wall:['#d9d7de','#c5d0e0'],greeting:'先把声音做好。',handle:'@严浩翔的录音室',bio:'制作人 / 创作歌手｜雾面'}
+};
+const NPC={
+ lin:{name:'林姐｜工作',initial:'林',color:'#93b1be'},wan:{name:'婉姐｜服装',initial:'婉',color:'#ccaeb8'},xu:{name:'许老师｜编辑',initial:'许',color:'#c5b4a4'},songprod:{name:'第十七页｜制片阿周',initial:'周',color:'#acc0b2'},zhou:{name:'周总｜新项目',initial:'周',color:'#aea7c6'},cheng:{name:'程姐｜前同事',initial:'程',color:'#a7bbb5'},maagent:{name:'许姐｜经纪',initial:'许',color:'#c3b0bd'},director:{name:'顾导｜潮汐来时',initial:'顾',color:'#aab9cf'},liuprod:{name:'韩制片',initial:'韩',color:'#aca8c6'},dp:{name:'陈摄影',initial:'陈',color:'#b8b2a5'},stage:{name:'陆岚｜飞鸟剧场',initial:'陆',color:'#9eb4ce'},invest:{name:'《飞鸟》制作协调',initial:'制',color:'#bdafc1'},label:{name:'楚岚｜发行',initial:'楚',color:'#a7b4be'},mix:{name:'孟老师｜混音',initial:'孟',color:'#b7bba7'}
+};
+const PEOPLE={...CHARACTERS,...NPC};
+const CG={
+ girls:{title:'三个人凑不出一个早八',members:['ding','song','he'],emoji:'☕',messages:[
+ ['10-09','23:08','song','又有一只蚊子从我耳边飞过去了'],['10-09','23:09','ding','你不是说你已经把窗户关了吗'],['10-09','23:09','song','它可能有房本'],['10-09','23:11','he','别急，我给物业发个租房申请让它搬走'],
+ ['10-10','13:21','ding','谁有黑色皮鞋，39到40都行'],['10-10','13:22','he','你上次那双呢'],['10-10','13:22','ding','舞台排练的时候鞋跟掉了'],['10-10','13:23','song','很有象征意义'],['10-10','13:23','ding','宋亚轩你最好闭嘴'],['10-10','13:24','he','我有，你明天来拿'],
+ ['10-11','20:16','song','今天终于买到上次那个芋泥包了'],['10-11','20:16','ding','你买了几个'],['10-11','20:17','song','一个'],['10-11','20:17','he','知道了 不用说了'],['10-11','20:18','song','不是！！最后一个！！'],
+ ['10-12','12:06','ding','宝宝们下午有人有空吗，我想去看一眼试镜的衣服'],['10-12','12:07','he','我下午去公司一趟，六点以后行'],['10-12','12:09','song','我可以但是先让我吃个饭'],['10-12','12:10','ding','你不刚起床吗'],['10-12','12:11','song','起床不影响吃饭'],['10-12','17:48','he','你俩去了吗'],['10-12','17:49','ding','去了，那件衣服有点太正式了'],['10-12','17:49','song','我觉得很好看啊'],['10-12','17:51','ding','那你自己穿去谈剧本'],['10-12','17:52','song','也不是不行'],
+ ['10-12','20:54','song','我的外卖怎么还没到'],['10-12','20:55','he','你再看一遍门口'],['10-12','20:56','song','我觉得我的外卖被人偷了'],['10-12','20:56','ding','你有没有看错楼层'],
+ ['10-13','10:15','song','我找到了'],['10-13','10:16','he','？'],['10-13','10:16','song','在隔壁单元'],['10-13','10:17','ding','你的外卖经历有连续剧的潜质'],['10-13','13:35','ding','我那双鞋穿着磨脚'],['10-13','13:36','he','里面贴防磨贴 我放鞋盒里了'],['10-13','13:36','ding','好嘞宝贝'],['10-13','13:37','song','我怎么没鞋'],['10-13','13:38','he','你先把外卖找明白']
+ ]},
+ boys:{title:'回头再说',members:['ma','liu','zhang','yan'],emoji:'🏀',messages:[
+ ['10-09','22:41','liu','周六谁出来打球'],['10-09','22:42','yan','几点'],['10-09','22:42','liu','下午三点'],['10-09','22:43','ma','我周六有事'],['10-09','22:44','zhang','我排练到四点半'],['10-09','22:45','liu','你们真忙啊'],['10-09','22:45','yan','那就回头再说'],['10-09','22:46','liu','是谁把群名改成这个的'],
+ ['10-11','19:22','zhang','前两天那家烧烤店是不是搬了'],['10-11','19:23','yan','没搬，店换了门头'],['10-11','19:24','ma','你怎么知道'],['10-11','19:25','yan','昨天去了'],['10-11','19:25','liu','你不喊我们？'],['10-11','19:26','yan','不是说回头再说吗'],
+ ['10-12','10:28','ma','谁拿了我上次落在车上的伞'],['10-12','10:30','liu','是不是那把黑的'],['10-12','10:30','ma','对'],['10-12','10:32','liu','那在我后备箱'],['10-12','10:33','zhang','那还属于马哥吗'],['10-12','10:34','ma','法律意义上暂时属于'],['10-12','10:36','yan','建议起诉'],
+ ['10-12','20:02','liu','有人今晚在线吗'],['10-12','20:03','yan','干吗'],['10-12','20:04','liu','有个片子想让你们看一眼'],['10-12','20:05','zhang','我十点之前得交东西，晚点'],['10-12','20:06','ma','发来吧，我刚收工'],['10-12','20:08','liu','行，我找一下链接'],['10-12','20:11','yan','你每次找链接都要十分钟'],['10-12','20:12','liu','现在有五分钟了'],
+ ['10-13','11:02','ma','伞我拿回来了'],['10-13','11:03','liu','怎么说得像解救人质'],['10-13','11:05','zhang','要不要给伞办个接风宴'],['10-13','11:05','ma','我考虑一下'],['10-13','18:45','zhang','最近有人在临川东边吗'],['10-13','18:47','yan','我在录音棚 怎么了'],['10-13','18:48','zhang','没事 想找个人吃点东西'],['10-13','18:49','yan','我七点半能走'],['10-13','18:50','zhang','走']
+ ]}
+};
+function addChat(id,title,members,raw){CG[id]={title,members,messages:raw};}
+addChat('ding_song','宋亚轩',['ding','song'],[
+ ['10-10','22:03','song','你上次演那个舞台剧的视频还有没有'],['10-10','22:04','ding','有啊，你想看哪个版本'],['10-10','22:04','song','最后谢幕前那一段'],['10-10','22:06','ding','[视频：台口排练片段 00:18]'],['10-10','22:09','song','哦哦哦就是这个'],['10-12','16:23','song','你看完衣服了吗'],['10-12','16:24','ding','在店里了'],['10-12','16:25','song','我到了楼下 买两杯什么'],['10-12','16:25','ding','冰美式少冰'],['10-12','16:26','song','好的 那给你买热的'],['10-12','16:27','ding','？'],['10-13','15:22','ding','你昨晚那个新结局我看了'],['10-13','15:24','song','怎么样'],['10-13','15:25','ding','我喜欢原来那版结尾。但是中间那场饭局新改得好'],['10-13','15:27','song','我也舍不得原版']
+]);
+addChat('ding_he','贺峻霖',['ding','he'],[
+ ['10-10','13:35','he','鞋我洗好了，你什么时候来拿'],['10-10','13:37','ding','明天晚上可以不'],['10-10','13:38','he','行'],['10-12','18:33','ding','宝贝借我那个双面胶可以吗'],['10-12','18:35','he','可以，鞋盒左侧小袋里'],['10-12','18:35','ding','你怎么什么都有哈哈哈'],['10-12','18:36','he','经纪人的购物车是一个小型五金市场'],['10-13','12:19','he','你今天吃东西了吗'],['10-13','12:20','ding','吃了的！'],['10-13','12:20','he','你每次加感叹号我都有点不相信']
+]);
+addChat('song_he','贺峻霖',['song','he'],[
+ ['10-11','00:12','song','我真的觉得这段删了太可惜'],['10-11','00:13','he','你先睡醒再决定'],['10-11','00:14','song','可是明天早上就要回编辑'],['10-11','00:15','he','那你明天早上八点让我提醒你'],['10-11','00:15','song','八点是晚上吗'],['10-12','15:06','he','新工作那边让我看合同 我还没答应'],['10-12','15:08','song','是之前说的独立音乐项目？'],['10-12','15:08','he','嗯。具体得先看团队权责划分'],['10-12','15:10','song','听着像你的风格，先把话讲明白'],['10-13','19:05','song','所以定了吗'],['10-13','19:07','he','还在谈。没有正式接项目']
+]);
+addChat('ding_lin','林姐｜工作',['ding','lin'],[
+ ['10-10','14:30','lin','《潮汐来时》那边收到你的资料了，试镜邀约还没正式发。'],['10-10','14:32','ding','收到，那我先准备两段不同情绪的。'],['10-11','10:02','lin','导演组可能看重人物的生活感，衣服不用太设计。'],['10-11','10:05','ding','明白，我自己再看看。'],['10-12','18:02','lin','周一前给我一个你方便的时间段，下午比较有可能。'],['10-12','18:04','ding','可以，周一下午都能协调。'],['10-12','18:05','lin','好的，等正式邮件。'],['10-13','09:28','lin','台词稿暂时不用再交，先等正式通知。'],['10-13','09:31','ding','好，辛苦林姐。']
+]);
+addChat('ding_wan','婉姐｜服装',['ding','wan'],[
+ ['10-11','17:06','wan','上次你留的米白衬衫我帮你收着了'],['10-11','17:08','ding','太好了！谢谢婉姐'],['10-12','15:40','ding','我今天过去试一下可以吗'],['10-12','15:41','wan','可以，六点前来'],['10-12','18:12','wan','黑色那件你要的话下周再来拿吧'],['10-12','18:13','ding','好，我再想想。']
+]);
+addChat('song_xu','许老师｜编辑',['song','xu'],[
+ ['10-10','09:22','xu','《第十七页》第三稿我收到了。制片方希望商量结尾的体量和拍摄成本。'],['10-10','09:27','song','可以讨论，但人物最后那个决定我希望先保留。'],['10-11','16:02','xu','下周会有一个开发沟通会，时间还没确定。'],['10-11','16:06','song','好的，我会把自己的方案写清楚。'],['10-12','19:11','xu','你新发的备注很清楚，今天先不用改了。'],['10-12','19:13','song','收到，谢谢老师。'],['10-13','17:20','xu','我把导演版本的分场建议转你邮箱了，先看，不急着回。'],['10-13','17:24','song','好的，我晚点仔细看。']
+]);
+addChat('song_prod','第十七页｜制片阿周',['song','songprod'],[
+ ['10-11','11:33','songprod','宋老师你好，我是《第十七页》制片组的小周，负责收材料。'],['10-11','11:34','song','你好，叫我亚轩就可以。'],['10-11','11:36','songprod','我们拿到的是第三稿，对吗？'],['10-11','11:37','song','对，文件名有0310那份。'],['10-12','10:03','songprod','收到了！谢谢，后续流程等制作通知。'],['10-12','10:04','song','辛苦啦。']
+]);
+addChat('he_zhou','周总｜新项目',['he','zhou'],[
+ ['10-11','11:12','zhou','小贺你好，之前提的独立唱片项目，我们希望你以经纪统筹身份加入。'],['10-11','11:18','he','您好，感谢信任。能否先发项目职责范围、预算权限及团队配置？'],['10-11','11:26','zhou','可以，我让同事整理。'],['10-12','15:42','zhou','资料已发邮箱，项目暂定《雾面》。'],['10-12','15:46','he','收到。我会先看过具体发行排期和决策权限，再跟您约沟通。'],['10-13','13:14','zhou','周二能来办公室聊吗？'],['10-13','13:26','he','可以，麻烦先确认会议议程。']
+]);
+addChat('he_cheng','程姐｜前同事',['he','cheng'],[
+ ['10-10','18:21','cheng','之前你推荐那家面馆我去了，好吃！'],['10-10','18:22','he','是不是！最后一口汤很好喝'],['10-12','11:47','cheng','你那边新项目谈得怎么样'],['10-12','11:50','he','还没签，先把职责捋清楚'],['10-12','11:51','cheng','别又把所有活往自己身上揽'],['10-12','11:52','he','我努力控制一下这个毛病']
+]);
+addChat('ma_liu','刘耀文',['ma','liu'],[
+ ['10-10','20:06','liu','哥你上次说的那个老电影叫什么'],['10-10','20:10','ma','《雾中的码头》？'],['10-10','20:11','liu','对对对'],['10-10','20:11','ma','看完记得把我的硬盘还了'],['10-12','20:39','liu','刚刚链接发你邮箱了'],['10-12','20:43','ma','收到，看完给你回。'],['10-12','20:45','liu','别用“挺好的”三个字敷衍'],['10-12','20:46','ma','那我争取写四个字'],['10-13','16:07','ma','片子看了，第三场节奏比上一版强。就是那段转场有点抢人物。'],['10-13','16:09','liu','我也觉得，明天再动它。']
+]);
+addChat('ma_zhang','张真源',['ma','zhang'],[
+ ['10-11','18:26','ma','你上次说的那个配乐版本还有吗'],['10-11','18:30','zhang','发你邮箱了。那个只是demo哈'],['10-11','18:31','ma','已经比我的哼哼好听了'],['10-12','11:16','zhang','下周有空来听一次排练吗'],['10-12','11:18','ma','看我这边工作安排，有空一定去'],['10-12','11:20','zhang','行，先不算你答应'],['10-13','14:41','ma','你们排练进度如何'],['10-13','14:45','zhang','歌基本齐了，制作预算还在谈']
+]);
+addChat('ma_yan','严浩翔',['ma','yan'],[
+ ['10-10','00:19','yan','我听你上次发的那首老歌了'],['10-10','00:20','ma','如何'],['10-10','00:22','yan','你是不是想让我说你的品味好'],['10-10','00:23','ma','你可以夸得有新意一点'],['10-12','13:12','ma','这周还在棚里？'],['10-12','13:16','yan','是，混音没搞完'],['10-12','13:17','ma','别忘了吃饭'],['10-12','13:18','yan','你怎么跟张哥一个语气'],['10-12','13:19','ma','说明你需要听两遍']
+]);
+addChat('ma_agent','许姐｜经纪',['ma','maagent'],[
+ ['10-11','09:15','maagent','《潮汐来时》读本准备改到下周，今天导演组会发更新稿。'],['10-11','09:18','ma','好，我晚点看。'],['10-12','16:54','maagent','媒体那边想加一个短访谈，主题围绕角色创作，不谈私人话题。'],['10-12','16:59','ma','给我看问题表吧。'],['10-12','17:00','maagent','我发邮箱。'],['10-13','18:17','maagent','下周读本暂定周三，最终时间等制片统筹确认。'],['10-13','18:19','ma','好的。']
+]);
+addChat('ma_director','顾导｜潮汐来时',['ma','director'],[
+ ['10-10','19:30','director','嘉祺，我把第二幕的情绪节奏调了一下，周末你看看。'],['10-10','19:40','ma','好的，周末看完跟您聊。'],['10-12','20:24','ma','顾导，您改的第二场我看了。有一个地方我想和您讨论，人物此时是不是更想回避而不是直接反驳？'],['10-12','20:27','director','这个点好，我们读本时一起试。'],['10-13','09:50','director','先按两种处理方式都标一下。'],['10-13','09:52','ma','好。']
+]);
+addChat('liu_zhang','张真源',['liu','zhang'],[
+ ['10-11','15:19','liu','哥能不能帮我听一段临时配乐'],['10-11','15:21','zhang','发我，晚一点听'],['10-11','18:06','zhang','第三十秒那个鼓有点满了'],['10-11','18:07','liu','啊我还以为不够'],['10-12','12:34','zhang','你这周还剪片吗'],['10-12','12:38','liu','《第十七页》资料堆成山了'],['10-12','12:40','zhang','加油，记得吃午饭'],['10-12','12:41','liu','我刚吃了两碗']
+]);
+addChat('liu_yan','严浩翔',['liu','yan'],[
+ ['10-11','00:47','liu','上号吗'],['10-11','00:48','yan','你怎么每天都这个时间找我'],['10-11','00:49','liu','夜生活'],['10-11','00:49','yan','中老年作息的夜生活'],['10-12','19:20','liu','你上次说的那个鼓点参考发我一下'],['10-12','19:25','yan','[文件：beat_ref_03.wav]'],['10-12','19:26','liu','谢了翔哥'],['10-13','20:02','liu','这周有球局吗'],['10-13','20:04','yan','张哥要忙剧场 估计难']
+]);
+addChat('liu_prod','韩制片',['liu','liuprod'],[
+ ['10-10','16:05','liuprod','最新预算表我批注了，群演和室内景合起来超了一些。'],['10-10','16:11','liu','收到，我今晚重新算。'],['10-12','14:02','liuprod','《第十七页》结尾那段预算还要沟通，别急着定删改。'],['10-12','14:07','liu','我知道，我也想先听完整编剧方案。'],['10-12','14:08','liuprod','下周争取把会议约起来。'],['10-13','18:05','liuprod','投资方想先看一页结尾成本说明，明晚前给我。'],['10-13','18:08','liu','行，我来整理。']
+]);
+addChat('liu_dp','陈摄影',['liu','dp'],[
+ ['10-11','22:17','liu','那场楼梯间你觉得自然光能拍吗'],['10-11','22:20','dp','看场地，最好有备用灯。'],['10-12','11:36','dp','我把参考照片发你邮箱了'],['10-12','11:37','liu','收到了。第三张角度不错。'],['10-12','11:38','dp','但那个景声音很嘈，后期会辛苦'],['10-13','10:19','liu','那还是再看个备选场地。']
+]);
+addChat('zhang_yan','严浩翔',['zhang','yan'],[
+ ['10-10','19:45','yan','张哥，我这个编曲有个弦乐想法'],['10-10','19:47','zhang','来，听听'],['10-10','19:52','yan','[文件：strings_sketch.mp3]'],['10-10','20:06','zhang','好听，但如果想要更冷一点，可以试试把高音区空出来'],['10-12','17:41','zhang','你新歌进度如何'],['10-12','17:43','yan','还在跟发行谈一首歌'],['10-12','17:44','zhang','别太晚回去'],['10-12','17:45','yan','又开始了张哥'],['10-13','19:33','yan','我晚点出棚，一会儿去吃面'],['10-13','19:35','zhang','老地方？'],['10-13','19:36','yan','行']
+]);
+addChat('zhang_stage','陆岚｜飞鸟剧场',['zhang','stage'],[
+ ['10-10','17:01','stage','飞鸟第二场排练前演员得知道是否用完整版歌曲。'],['10-10','17:05','zhang','知道。我在跟制作那边确认，先按完整版排练。'],['10-12','18:16','stage','舞台那边预算条件很紧，投资方想把现场乐队减一半。'],['10-12','18:21','zhang','我明白他们的考虑，但先让我看看替代方案再回复。'],['10-12','18:22','stage','好。我们排练照常。'],['10-13','15:01','stage','合唱段今天状态不错，录了一版。'],['10-13','15:05','zhang','太好了，我晚点听。']
+]);
+addChat('zhang_invest','《飞鸟》制作协调',['zhang','invest'],[
+ ['10-11','14:08','invest','张老师，赞助方提出希望在第二幕加入品牌合作环节。'],['10-11','14:12','zhang','如果会打断剧情，恐怕需要换一种呈现方式。'],['10-12','09:54','invest','预算条件和改动意见我发您邮箱了，周一前希望有一个可讨论方案。'],['10-12','10:01','zhang','收到。舞台效果和内容完整性我会一起考虑。'],['10-13','16:30','invest','周一沟通前我们再对一下方案？'],['10-13','16:33','zhang','可以，先发会议提纲给我。']
+]);
+addChat('yan_label','楚岚｜发行',['yan','label'],[
+ ['10-10','15:47','label','《雾面》现在这版十首歌，发行希望先定九首，以便做前期宣发。'],['10-10','15:51','yan','我倾向保留第七首，它在整张专辑里有位置。'],['10-11','16:12','label','我们不是否定歌，只是担心制作与宣发窗口。'],['10-11','16:16','yan','可以讨论成本，但希望先听完母带再定。'],['10-12','14:02','label','发行团队周一会出新排期。另外经纪统筹人选还在谈。'],['10-12','14:06','yan','收到。排期先发我。'],['10-13','12:23','label','两版时间表已发。下周安排正式项目讨论。'],['10-13','12:30','yan','我看完再回复。']
+]);
+addChat('yan_mix','孟老师｜混音',['yan','mix'],[
+ ['10-11','23:09','mix','第三首低频处理好了，你可以明天听一耳朵'],['10-11','23:11','yan','好，感谢孟老师。'],['10-12','18:20','yan','刚听了，主歌的空间感很好。副歌的人声还能再靠前一点吗？'],['10-12','18:22','mix','没问题，我试两版'],['10-12','18:23','yan','辛苦！'],['10-13','16:13','mix','两版都在共享文件夹里了'],['10-13','16:15','yan','好，我进棚试听。']
+]);
+const USER_CHAT_IDS={ding:['girls','ding_song','ding_he','ding_lin','ding_wan'],song:['girls','ding_song','song_he','song_xu','song_prod'],he:['girls','ding_he','song_he','he_zhou','he_cheng'],ma:['boys','ma_liu','ma_zhang','ma_yan','ma_agent','ma_director'],liu:['boys','ma_liu','liu_zhang','liu_yan','liu_prod','liu_dp'],zhang:['boys','ma_zhang','liu_zhang','zhang_yan','zhang_stage','zhang_invest'],yan:['boys','ma_yan','liu_yan','zhang_yan','yan_label','yan_mix']};
+const POSTS=[
+ {id:1,at:'10-12 19:38',by:'ding',txt:'傍晚路过一家开了很多年的裁缝店，门口摆着一盆好大的绿植。老板说它已经十六岁了。想了一下，比我在这座城市待的时间还长。',like:'1.2万',comments:['@琥珀色天气：十六岁的绿植也算本地人','@剧场边边：你今天是不是去看衣服啦']},
+ {id:2,at:'10-12 16:10',by:'song',txt:'写字写到一半去楼下买面包。店员问我要切几片，我说按剧情需要切。她看我的眼神像看一个需要休假的人。',like:'3,212',comments:['@路过的土豆：编剧的精神状态哈哈哈','@听雨的人：最后切了几片？']},
+ {id:3,at:'10-12 11:31',by:'he',txt:'我宣布今天下午给自己放三个小时的假。是三个小时，不是三分钟。希望各工作群相互转告。',like:'8,234',comments:['@等公交的小陈：这是公开申请还是正式通知','@午后柠檬：哈哈哈哈哈']},
+ {id:4,at:'10-12 17:15',by:'ma',txt:'读到一本旧书里的一句话，觉得很适合现在的天气。今天终于有机会慢慢喝完一杯茶。',like:'8.6万',comments:['@晴天底片：秋天好好休息','@老电影收藏家：期待新作品！']},
+ {id:5,at:'10-12 14:58',by:'liu',txt:'剪辑软件已经比我更熟悉凌晨四点的临川。今天的目标是把时间线从七层缩减到五层。',like:'2.1万',comments:['@片场小工：五层也是七层的另一种形态','@乌云放晴：导演加油']},
+ {id:6,at:'10-12 18:44',by:'zhang',txt:'今天排练厅的钢琴有一个键总是比别的音慢半拍，后来发现是自己的手指按慢了。对不起钢琴。',like:'1.4万',comments:['@飞鸟观众席：钢琴：这口锅我不背','@秋雨弦音：哈哈哈哈']},
+ {id:7,at:'10-12 20:11',by:'yan',txt:'棚里待了一下午。现在最想听见的声音是外卖骑手按门铃。',like:'5.2万',comments:['@慢门快门：请让制作人吃饭','@好多云：新歌慢慢来！']},
+ {id:8,at:'10-12 12:48',by:'media',name:'临川电影观察',txt:'#临川青年影像周# 本届短片展映报名今日截止，青年创作者分享会将于下周开幕。你最近印象最深的一部短片是哪部？',like:'2,918',comments:['@拿铁去冰：想看创作幕后']},
+ {id:9,at:'10-12 18:06',by:'stageMedia',name:'戏剧台前幕后',txt:'有人问音乐剧现场乐队为什么这么重要？它不是一份可以随意关闭的背景音效，而是每晚和演员一起呼吸的另一个角色。',like:'4,203',comments:['@剧场常客：太有共鸣了']},
+ {id:10,at:'10-12 15:05',by:'street',name:'临川生活指南',txt:'#临川周末夜市# 新出的板栗奶油泡芙试吃结束了。排队半小时值不值，各位自行判断。',like:'6,807',comments:['@肚子饿啦：我要去']},
+ {id:11,at:'10-13 18:40',by:'ding',txt:'排练室地板还是熟悉的声音。今天回家路上买了热栗子，纸袋子烫手但开心。',like:'1.5万',comments:['@风吹到了：栗子好吃！']},
+ {id:12,at:'10-13 16:10',by:'song',txt:'把一个原本只有三行的场景写成了两页，又删回四行。今天算是有进展。',like:'4,321',comments:['@写故事的人：这就是写作']},
+ {id:13,at:'10-13 19:05',by:'zhang',txt:'录了一段合唱，回听时有一位演员笑场，大家反而唱得更齐了。今天在排练厅过得很好。',like:'1.9万',comments:['@飞鸟常驻观众：期待能在剧场听到']}
+];
+const HOT=[['临川青年影像周展映名单','热'],['音乐剧现场乐队的重要性','新'],['周末夜市的板栗泡芙',''],['十月的第一场秋雨',''],['编剧的深夜脑洞',''],['秋日电影片单推荐','']];
+const ALBUMS={
+ ding:[['10-12','16:46','🧥','米白色衬衫','#f4e3ce','#c4ad9f','试衣镜里拍了一张，袖子比想象中长。'],['10-12','17:03','☕','#1','#d2c5bc','#9a8e93','亚轩买来的热咖啡。'],['10-11','21:06','🎭','排练厅','#ddd3c6','#9897a6','排练结束时拍的舞台。'],['10-10','13:12','👞','那双坏掉的鞋','#dad2cf','#c6b5a6','掉下来的鞋跟还留在袋子里。'],['10-09','18:17','🌇','回家路上的天空','#e7a895','#a19bc8','秋天有点明显了。']],
+ song:[['10-12','15:27','🥖','午饭','#f0d7a1','#b69d78','买了面包，走到一半就吃了。'],['10-12','16:31','☕','两杯咖啡','#dbc2ab','#a8a3ba','一杯热的，一杯冰的。'],['10-11','23:44','📝','稿纸','#e4e0d0','#bfc9d0','纸上写着人物名字和箭头。'],['10-10','19:55','🌳','楼下那棵树','#b0c4aa','#8bafa2','没什么特别的，只是觉得好看。'],['10-09','13:05','🐟','一碗鱼汤','#d6d9cd','#c4b7a4','很热。']],
+ he:[['10-12','17:10','📋','项目资料','#e3dcda','#bdc2d1','会议笔记被折了一个角。'],['10-12','18:39','👞','鞋盒','#cec7ca','#b6a4b4','替丁程鑫准备的鞋盒。'],['10-11','12:02','🍜','午饭','#e6c7a2','#ada5aa','那家旧面馆还是很好吃。'],['10-10','23:11','🌃','街灯','#a3adc4','#696d96','散步回来时。'],['10-09','09:17','🌷','花店','#e9cbd0','#c3b9a4','门口的花。']],
+ ma:[['10-12','18:26','🍵','茶杯','#d0d4ce','#a5b0ae','收工以后。'],['10-12','14:18','📖','读本','#d8cbb9','#aaa6a3','手写标注。'],['10-11','18:57','🌧️','车窗','#b9c6cc','#8799aa','窗外阴天。'],['10-10','13:24','🎬','片场监视器','#a2afb6','#656f82','工作照。'],['10-09','20:30','🍲','晚饭','#e0c6a8','#bca9a2','家常菜。']],
+ liu:[['10-12','19:44','💻','剪辑时间线','#b5c8cf','#7a9aa3','七层音轨。'],['10-12','12:33','📐','分镜草图','#e4d7c6','#b8c1ad','镜头轨迹还没画完。'],['10-11','17:31','🏀','球场','#8caf9c','#627f73','没人到齐。'],['10-10','22:44','🎥','短片现场','#8faba3','#738b99','天气还挺好。'],['10-09','00:04','🍜','夜宵','#d2c7ba','#b2a9a4','一大碗。']],
+ zhang:[['10-12','18:01','🎹','排练室的琴','#dad2df','#a7abbc','中间那个键没有坏。'],['10-12','14:38','🎼','谱子','#ece6d0','#cbc5b6','第二幕的合唱谱。'],['10-11','22:20','🍛','晚饭','#e4bf9f','#b4afa2','做多了一份。'],['10-10','18:45','🎭','空舞台','#a6b8c8','#7e8498','散场后留了盏灯。'],['10-09','15:37','🌿','后台窗台','#b4c2ac','#9ba5aa','长得很好。']],
+ yan:[['10-12','18:12','🎛️','控制台','#a8a6b4','#717487','第三首的混音工程。'],['10-12','12:43','🎧','耳机','#d5d1dc','#9da1b5','线又缠在了一起。'],['10-11','20:51','🌫️','录音室窗外','#bcc3c9','#8e93a6','晚上起雾。'],['10-10','16:25','📀','小样文件','#dcd9df','#b6b5c9','还没有命名。'],['10-09','21:03','🥤','便利店','#d4c4c7','#a5aab4','买了水。']]
+};
+// 修正仅用于界面展示的相册标题，不包含真实照片。
+ALBUMS.ding[1][3]='咖啡';
+const NOTES={
+ ding:[['10-12','试镜准备','《潮汐来时》\n\n两段台词：第一段忍住不说，第二段终于说出来。\n\n服装：米白衬衫可以，深色外套再考虑。\n别把紧张演成愤怒。\n\n等正式通知，不自己吓自己。'],['10-11','这个月想看的戏','1. 新排的《无声之夜》\n2. 旧街口的小剧场实验戏\n3. 有空带亚轩去看那场即兴演出'],['10-10','买东西','防磨贴\n润唇膏\n洗衣液\n给小贺带那家面包店的蛋挞']],
+ song:[['10-12','《第十七页》· 第三稿讨论','人物不是不知道离开会失去什么。\n\n如果把最后的选择改掉，前面好几场戏就都失去了意义。\n\n备选方案：合并场景，不删动机。'],['10-11','晚饭随机选择','火锅 / 面 / 馄饨 / 芋泥包\n\n不要再忘记拿外卖了。'],['10-10','路上听来的句子','「我不是不想回去，我只是再走一段路。」\n\n还不知道能不能用进剧本。']],
+ he:[['10-12','新项目沟通清单','《雾面》\n\n先确认：\n1. 项目统筹职责边界\n2. 发行排期决策者\n3. 预算权限\n4. 现有音乐制作团队沟通方式\n5. 是否可以对风险提出正式异议\n\n未签约。'],['10-11','这一周','洗衣服、买咖啡豆、给丁送鞋、把工作邮箱里的标记整理一下。'],['10-10','别忘了','有些事可以帮忙，但不必全部替别人扛。']],
+ ma:[['10-12','《潮汐来时》人物笔记','他不是冷淡。\n\n第二场：被问到为什么回来，先喝一口水。是逃避，还是需要时间？\n\n读本时试两种版本。'],['10-11','周末','读稿\n看耀文的剪辑\n收回雨伞\n给家里打电话'],['10-10','旧片单','《雾中的码头》\n《雨中的故事》\n《漫长的一天》']],
+ liu:[['10-12','《第十七页》会议准备','核心问题：\n结尾的拍摄成本确实高。\n\n但如果只是删除，整部电影会变轻。\n先听编剧解释，再提我自己的分场方案。\n\n备份一个缩减场景版本。'],['10-11','剪辑备忘','第三场转场有点太满。\n不需要所有变化都有音乐提醒。'],['10-10','本周','场地备选、预算表、短片链接给马哥']],
+ zhang:[['10-12','飞鸟剧场｜制作方案','问题：缩减现场乐队编制是否还能保住第二幕的层次。\n\n方案A：保留关键四件乐器，其他段落用音轨。\n方案B：缩减一场场景转换，把经费移到乐手。\n\n最坏的情况也要先跟演员和音乐总监解释清楚。'],['10-11','歌词碎片','一个人靠近天光的时候\n会先看到自己的影子\n\n还没写完。'],['10-10','采购','乐谱夹\n笔芯\n蜂蜜\n烤箱纸']],
+ yan:[['10-12','《雾面》曲序草案','01 / 玻璃雨\n02 / 折返\n03 / 游离\n04 / 无声公路\n05 / 夜航\n06 / 熄灯以后\n07 / 慢慢沉\n08 / 空镜\n09 / 雾面\n\n第七首暂时不删。'],['10-11','棚里的小事','第三首副歌人声往前一点\n鼓组不要再堆了\n把监听耳机线换掉'],['10-10','想听的唱片','几张老爵士、一张七十年代录音现场。']]
+};
+const EVENTS={
+ ding:[['10-12','16:00','试衣服','婉姐的店；与亚轩碰面'],['10-13','14:00','自行排练','未收到正式试镜时间'],['10-14','待定','试镜时间预留','具体以经纪人通知为准']],
+ song:[['10-12','19:00','提交剧本批注','第三稿补充说明'],['10-13','下午','阅读分场建议','编辑邮箱'],['10-15','待定','《第十七页》开发会议','尚未确认']],
+ he:[['10-12','15:00','查阅《雾面》项目资料','先看职责与排期'],['10-13','13:00','邮件回复周总','未签约'],['10-15','待定','项目沟通会','待确认']],
+ ma:[['10-12','工作日','《潮汐来时》读本准备','看导演新版第二幕'],['10-13','16:00','看耀文短片','私人安排'],['10-16','待定','剧组读本','制片安排待确认']],
+ liu:[['10-12','14:00','《第十七页》预算复核','与韩制片讨论结尾成本'],['10-13','18:00','写结尾成本说明','明晚前交'],['10-15','待定','开发会议','待制片统筹确认']],
+ zhang:[['10-12','14:30','《飞鸟剧场》排练','排练厅B'],['10-13','15:00','听合唱录音','和陆岚沟通'],['10-14','上午','制作预算方案讨论','等待议程']],
+ yan:[['10-12','14:00','《雾面》混音','第三首试听'],['10-13','16:00','混音两版对比','录音棚'],['10-14','待定','发行排期讨论','尚未确认']]
+};
+const PLAYLIST={ding:[['散场以后','私人歌单'],['雨与胶片','通勤'],['旧剧场的灯','睡前']],song:[['一场未写完的梦','写作时'],['慢镜头','下楼买面包'],['夏天的尾音','收藏']],he:[['不加班日记','最近播放'],['走路要听歌','通勤'],['晚一点再说','私人歌单']],ma:[['给秋天的歌','收藏'],['旧时光录音','片单延伸'],['午後的一杯茶','最近播放']],liu:[['长镜头','剪辑参考'],['节奏练习','私人歌单'],['路灯下','通勤']],zhang:[['飞鸟·工作小样','自作曲'],['后台散场','音乐剧收藏'],['钢琴与雨','随便听听']],yan:[['雾面·工程草案','未公开作品'],['模拟磁带','灵感参考'],['凌晨的工作室','最近播放']]};
+const KEY='jingtou-zhwai-ai-v02';
+let persisted={owner:'ding',day:0,bookmarks:[]};try{const stored=JSON.parse(localStorage.getItem(KEY)||'null');if(stored&&CHARACTERS[stored.owner])persisted={...persisted,...stored}}catch{}
+let S={owner:persisted.owner,day:Number.isInteger(Number(persisted.day))&&Number(persisted.day)>=0?Number(persisted.day):0,bookmarks:Array.isArray(persisted.bookmarks)?persisted.bookmarks:[],app:'home',sub:'',chat:'',tab:'chats',wtab:'feed',search:'',imageIndex:0,noteIndex:0,commentId:0,showVoice:{}};
+const WORLD={maxDay:1, avatars:{ding:'/assets/avatars/ding.png',song:'/assets/avatars/song.png',he:'/assets/avatars/he.png',ma:'/assets/avatars/ma.png',liu:'/assets/avatars/liu.png',zhang:'/assets/avatars/zhang.png',yan:'/assets/avatars/yan.png'}, ready:false, busy:false, configured:false, batches:[], status:'pending'};
+let apiPin='';try{apiPin=sessionStorage.getItem('jtz-pin')||''}catch{}
+const GENERATED_APPLIED=new Set();
+const $=id=>document.getElementById(id);
+const h=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const dateFor=(day)=>{const d=new Date(Date.UTC(2030,9,12+Number(day)));return d.toISOString().slice(5,10)};
+const nowDate=()=>dateFor(S.day);
+const dayLong=()=>{const d=new Date(Date.UTC(2030,9,12+S.day));return `2030年${d.getUTCMonth()+1}月${d.getUTCDate()}日 · 星期${'日一二三四五六'[d.getUTCDay()]}`};
+const timeNow=()=>S.day===0?'21:08':S.day===1?'20:32':'21:10';
+const filtered=arr=>(arr||[]).filter(x=>x[0]<=nowDate());
+let prefTimer=null,prefsHydrated=false;
+const save=()=>{
+  const prefs={owner:S.owner,day:S.day,bookmarks:S.bookmarks};
+  try{localStorage.setItem(KEY,JSON.stringify(prefs))}catch{}
+  if(WORLD.ready&&prefsHydrated){clearTimeout(prefTimer);prefTimer=setTimeout(()=>apiFetch('/api/user-state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(prefs)}).catch(err=>console.info('Preference sync:',err.message)),350)}
+};
+const col=id=>(PEOPLE[id]||{color:'#bdaecd'}).color;
+const avatar=(id,group=false,small=false)=>group?`<div class="avatar group">${h(CG[id].emoji||'👥')}</div>`:`<div class="avatar ${WORLD.avatars[id]?'has-photo':''}" style="--avatar-bg:${col(id)}">${WORLD.avatars[id]?`<img src="${h(WORLD.avatars[id])}" loading="lazy" alt="${h(displayName(id))}头像"/>`:h(PEOPLE[id]?.initial||'人')}</div>`;
+const displayName=id=>PEOPLE[id]?.name||id;
+const counter=id=>{const nums={girls:3,boys:2,ding_song:1,he_zhou:1,ma_agent:1,liu_prod:1,zhang_stage:1,yan_label:1};return nums[id]||0};
+function persistToast(msg){const t=$('toast');t.textContent=msg;t.hidden=false;clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.hidden=true,1700)}
+function appIcon(kind,sym,label,click,unread=''){return `<button class="app-tile" data-action="${click}"><div class="app-icon" data-kind="${kind}">${sym}${unread?`<span class="icon-unread">${unread}</span>`:''}</div><span>${label}</span></button>`}
+function bar(title,back='home',actions=''){return `<header class="bar"><div class="bar-side"><button class="nav-btn" data-action="${back}" aria-label="返回"><span class="arrow">‹</span> 返回</button></div><div class="bar-title">${h(title)}</div><div class="bar-side right">${actions}</div></header>`}
+function bottomTabs(items,active){return `<div class="tabbar">${items.map(x=>`<button class="tab-btn ${x[0]===active?'active':''}" data-action="${x[2]}"><span class="tab-emoji">${x[3]}</span>${h(x[1])}</button>`).join('')}</div>`}
+function home(){
+const c=CHARACTERS[S.owner],apps=[['wechat','☏','微信','app:wechat','3'],['weibo','◎','微博','app:weibo',''],['albums','✿','相册','app:albums',''],['notes','▤','备忘录','app:notes',''],['calendar','12','日历','app:calendar',''],['music','♫','音乐','app:music',''],['journal','✎','我的手账','app:journal',''],['devices','⇄','切换手机','app:devices','']];
+const progress=S.day<WORLD.maxDay?'查看下一天':S.day<1?'查看已预装的10月13日':'✦ AI 继续下一天';
+const badge=WORLD.busy?'AI 正在续写…':WORLD.ready?(WORLD.configured?'API Key 已配置 · 按需生成':'尚未配置 API Key'):'连接世界中…';
+return `<div class="home-view" style="--wall1:${c.wall[0]};--wall2:${c.wall[1]}"><div class="home-date"><div class="clock">${timeNow()}</div><div class="day">${dayLong()}</div></div><div class="home-greeting"><div><b>${h(c.name)}的 iPhone 16</b><span>${h(c.greeting)}</span></div><div class="mode-mark">◌ 观察档</div></div><div class="app-grid">${apps.map(a=>appIcon(...a)).join('')}</div><div class="advance-card"><div class="engine-status ${WORLD.busy?'pending':WORLD.ready&&WORLD.configured?'online':WORLD.status==='error'?'error':'pending'}"><i class="dot"></i>${h(badge)}</div><p>翻阅已有内容不消耗 API。只有推进到新的一天才生成故事，并会永久保存到世界账本。</p><button data-action="advance" ${WORLD.busy?'disabled':''}>${WORLD.busy?'正在生成，请继续翻别的 App…':progress}</button></div><div class="dock">${apps.filter((a,i)=>[0,1,6,7].includes(i)).map(a=>`<button aria-label="${a[2]}" data-action="${a[3]}"><div class="app-icon" data-kind="${a[0]}">${a[1]}</div></button>`).join('')}</div></div>`}
+function chatTitle(id){const chat=CG[id];if(chat.members.length>2)return chat.title;const target=chat.members.find(x=>x!==S.owner);return target?displayName(target):chat.title}
+function latest(id){return filtered(CG[id].messages).slice(-1)[0]}
+function visibleChats(){return USER_CHAT_IDS[S.owner].map(id=>({id,m:latest(id)})).filter(x=>x.m).sort((a,b)=>b.m[0].localeCompare(a.m[0])||b.m[1].localeCompare(a.m[1]))}
+function wechat(){let main='';if(S.tab==='chats'){const rows=visibleChats().filter(x=>!S.search||chatTitle(x.id).toLowerCase().includes(S.search.toLowerCase())||filtered(CG[x.id].messages).some(m=>m[3].includes(S.search)));
+ main=`<div class="scroll" id="wc-scroll"><div class="search-wrap"><input class="search-field" data-input="chat-search" value="${h(S.search)}" placeholder="搜索聊天和消息" aria-label="搜索微信" /></div><div class="chat-list">${rows.map(({id,m})=>`<button class="chat-row" data-action="chat:${id}">${avatar(CG[id].members.length>2?id:CG[id].members.find(x=>x!==S.owner),CG[id].members.length>2)}<div class="chat-main"><div class="chat-title-line"><span class="chat-name">${h(chatTitle(id))}</span><span class="chat-date">${h(m[0]===nowDate()?m[1]:m[0].replace('-','/'))}</span></div><div class="chat-preview-line"><span class="preview">${CG[id].members.length>2?`${h(displayName(m[2]))}：`:''}${h(m[3])}</span>${counter(id)?`<span class="unread">${counter(id)}</span>`:''}</div></div></button>`).join('')||'<div class="empty">没有找到相关聊天</div>'}</div></div>`;
+}else if(S.tab==='contacts'){main=`<div class="scroll"><div class="section-heading">联系人 · 观察档</div>${[...new Set(USER_CHAT_IDS[S.owner].flatMap(id=>CG[id].members.filter(p=>p!==S.owner)))].concat(USER_CHAT_IDS[S.owner].flatMap(id=>CG[id].members.filter(p=>p!==S.owner)).length?[]:[]).map(id=>`<div class="contact-row">${avatar(id)}<strong>${h(displayName(id))}</strong></div>`).join('')}</div>`}
+else if(S.tab==='moments'){const friends=S.owner==='ding'||S.owner==='song'||S.owner==='he'?['ding','song','he']:['ma','liu','zhang','yan'];main=`<div class="scroll moments"><div class="moment-hero"><span class="moment-title">朋友圈</span></div>${POSTS.filter(p=>friends.includes(p.by)&&p.at.slice(0,5)<=nowDate()).slice().reverse().map(p=>`<div class="post">${avatar(p.by)}<div style="flex:1"><span class="name">${h(displayName(p.by))}</span><p>${h(p.txt)}</p><span class="date">${h(p.at.replace(' ',' · '))}</span></div></div>`).join('')}</div>`}
+else {main=`<div class="scroll"><div class="screen-card"><b>${h(CHARACTERS[S.owner].name)}</b><div class="mini-meta">本页为观察模式。不能通过机主账号发送消息、点赞或修改个人资料。</div></div><button class="note-row" data-action="app:journal"><strong>✎ 我的手账</strong><span>收藏虚构线索和聊天片段</span></button><button class="note-row" data-action="app:devices"><strong>⇄ 切换机主</strong><span>保留同一世界日期和消息记录</span></button><button class="note-row" data-action="app:home"><strong>⌂ 返回桌面</strong><span>关闭微信</span></button></div>`}
+return `<section class="app-view">${bar('微信','home','<button class="nav-icon" data-action="app:devices" aria-label="切换机主">⋯</button>')}${main}${bottomTabs([['chats','微信','tab:chats','☏'],['contacts','通讯录','tab:contacts','♧'],['moments','发现','tab:moments','◎'],['me','我','tab:me','◉']],S.tab)}</section>`;
+}
+function chatView(){let chat=CG[S.chat];if(!chat)return wechat();const rows=filtered(chat.messages);let prev='';let html='';rows.forEach((m,i)=>{const mine=m[2]===S.owner;const stamp=m[0]!==prev||i===0|| (i>0&& Math.abs(parseInt(m[1].replace(':',''),10)-parseInt(rows[i-1][1].replace(':',''),10))>120);if(stamp)html+=`<div class="stamp">${m[0]} ${m[1]}</div>`;prev=m[0];const unique=`${S.chat}:${m[0]}:${m[1]}:${m[2]}:${i}`;const b=S.bookmarks.some(x=>x.id===unique);const isVoice=m[3].startsWith('[语音');let msg=h(m[3]);if(isVoice)msg=`🎤 ${msg} <span style="font-size:10px;opacity:.6">（模拟内容）</span>`;html+=`<div class="message-line ${mine?'own':''}">${avatar(m[2])}<div class="message-wrap">${chat.members.length>2?`<div class="sender">${h(displayName(m[2]))}</div>`:''}<div class="bubble">${msg}</div><span class="message-actions"><button class="bookmark ${b?'saved':''}" data-action="bookmark:${i}" title="收藏到手账">${b?'★':'☆'}</button></span></div></div>`});return `<section class="app-view">${bar(chatTitle(S.chat),'back:wechat','<button class="nav-icon" data-action="app:devices" aria-label="切换手机">⋯</button>')}<div class="scroll chat-bg" id="message-scroll"><div class="message-scroll">${html}</div></div><div class="compose-readonly">⌘ <div class="read-only-field">观察模式 · 仅浏览</div> ☺ <span style="font-size:21px">⊕</span></div></section>`}
+function renderPost(p){const c=CHARACTERS[p.by],name=p.name||c?.name||'临川生活';return `<div class="post-card"><div class="post-top">${avatar(p.by)}<div><div class="post-author">${h(name)}</div><div class="post-meta">${h(p.at)} · 来自 虚构临川客户端</div></div></div><div class="post-text">${h(p.txt)}</div><div class="post-foot"><button data-action="comments:${p.id}">↩ 评论 ${p.comments.length}</button><span>↗ 转发</span><span>♡ ${h(p.like)}</span></div>${S.commentId===p.id?`<div class="comment-box">${p.comments.map(t=>`<div>${h(t)}</div>`).join('')}</div>`:''}</div>`}
+function weibo(){const circle=['ding','song','he'].includes(S.owner)?['ding','song','he']:['ma','liu','zhang','yan'];const posts=POSTS.filter(p=>p.at.slice(0,5)<=nowDate()&&(circle.includes(p.by)||['media','stageMedia','street'].includes(p.by))).sort((a,b)=>b.at.localeCompare(a.at));return `<section class="app-view">${bar('微博','home','<button class="nav-icon" data-action="app:devices">⋯</button>')}<div class="weibo-tabs"><button data-action="wtab:feed" class="${S.wtab==='feed'?'active':''}">关注</button><button data-action="wtab:hot" class="${S.wtab==='hot'?'active':''}">热搜</button><button data-action="wtab:profile" class="${S.wtab==='profile'?'active':''}">我</button></div><div class="scroll">${S.wtab==='feed'?`<div class="feed-list">${posts.map(renderPost).join('')}</div>`:S.wtab==='hot'?`<div class="section-heading">${dayLong()} · 平行世界虚构热搜</div>${HOT.map(([t,flag],i)=>`<button class="hot-row" data-action="hot:${i}"><span class="hot-rank">${i+1}</span><span class="hot-title">${h(t)}</span>${flag?`<span class="small-orange">${h(flag)}</span>`:''}<span class="hot-meta">${(53-i*6).toFixed(1)}万</span></button>`).join('')}`:`<div class="weibo-head"><strong>${h(CHARACTERS[S.owner].name)}</strong><span>${h(CHARACTERS[S.owner].handle)} · 虚构账号</span><span>${h(CHARACTERS[S.owner].bio)}</span></div>${POSTS.filter(p=>p.by===S.owner&&p.at.slice(0,5)<=nowDate()).sort((a,b)=>b.at.localeCompare(a.at)).map(renderPost).join('')}`}</div></section>`}
+function album(){const photos=ALBUMS[S.owner].filter(p=>p[0]<=nowDate());return `<section class="app-view">${bar('相册','home','<button class="nav-icon" data-action="app:devices">⋯</button>')}<div class="scroll"><div class="screen-card"><strong>最近项目</strong><div class="mini-meta">${h(CHARACTERS[S.owner].name)} · ${photos.length} 个占位相片 · 暂无真实人像素材</div></div><div class="album-grid">${photos.map((p,i)=>`<button class="album-item" data-action="photo:${i}" style="--ph1:${p[4]};--ph2:${p[5]}"><span>${p[2]}</span></button>`).join('')}</div></div></section>`}
+function photo(){const p=ALBUMS[S.owner].filter(p=>p[0]<=nowDate())[S.imageIndex];if(!p)return album();return `<section class="app-view">${bar('照片','back:albums')}<div class="scroll" style="background:#fcfcfd"><div class="detail-photo" style="--ph1:${p[4]};--ph2:${p[5]}">${p[2]}</div><div class="photo-info"><h3>${h(p[3])}</h3><p>${h(p[0])} · ${h(p[1])}</p><p>${h(p[6])}</p><p style="font-size:11px;color:#aaa">试玩占位画面 · 待后续导入正式素材</p></div></div></section>`}
+function notes(){return `<section class="app-view">${bar('备忘录','home')}<div class="scroll"><div class="section-heading">${NOTES[S.owner].length} 条备忘录 · 仅浏览</div>${NOTES[S.owner].map((n,i)=>`<button class="note-row" data-action="note:${i}"><strong>${h(n[1])}</strong><span>${h(n[0])}　${h(n[2].replace(/\n/g,' ').slice(0,32))}…</span></button>`).join('')}</div></section>`}
+function note(){const n=NOTES[S.owner][S.noteIndex];return `<section class="app-view">${bar('备忘录','back:notes')}<div class="scroll"><div class="note-detail"><h2>${h(n[1])}</h2><div style="font-size:12px;color:#aaa;margin-bottom:20px">2030-${n[0]} · 仅浏览</div>${h(n[2])}</div></div></section>`}
+function calendar(){
+const ev=EVENTS[S.owner].filter(e=>e[0] <= dateFor(Math.max(S.day+3,4)));
+const diary=WORLD.batches.filter(b=>b.day.slice(5)<=nowDate()).flatMap(b=>b.events.filter(e=>e.known_by.includes(S.owner)).map(e=>({day:e.day.slice(5),time:e.time,title:e.title,summary:e.summary})));
+return `<section class="app-view">${bar('日历','home')}<div class="scroll"><div style="background:#fff;text-align:center;padding:21px 0"><div style="color:#9f7db5;font-size:13px">2030年${nowDate().slice(0,2)}月</div><strong style="font-size:58px;font-weight:300">${Number(nowDate().slice(3))}</strong><div style="font-size:12px;color:#9c9ca4">${dayLong()} · 当前日期</div></div><div class="section-heading">个人日程 · 已有安排与获知的事件</div>${ev.map(e=>`<div class="event-row"><div class="event-time">${h(e[0])}<br>${h(e[1])}</div><div class="event-info"><strong>${h(e[2])}</strong><p>${h(e[3])}</p></div></div>`).join('')}${diary.map(e=>`<div class="event-row"><div class="event-time">${h(e.day)}<br>${h(e.time)}</div><div class="event-info"><strong>${h(e.title)}</strong><p>${h(e.summary)}</p></div></div>`).join('')}</div></section>`}
+function music(){return `<section class="app-view">${bar('音乐','home')}<div class="scroll"><div class="music-header"><div class="record"></div><strong>最近播放</strong><p style="font-size:11px;color:#aaa">${h(CHARACTERS[S.owner].name)}的音乐 · 曲目名称为平行世界虚构占位</p></div>${PLAYLIST[S.owner].map((x,i)=>`<div class="music-row"><span class="music-num">${i+1}</span><div style="flex:1"><strong>${h(x[0])}</strong><p>${h(x[1])}</p></div><button class="nav-btn" data-action="track:${i}" aria-label="查看曲目">···</button></div>`).join('')}</div></section>`}
+function journal(){return `<section class="app-view">${bar('我的手账','home')}<div class="scroll"><div class="journal-intro">这里存放的是你作为旁观者收藏的虚构聊天片段。不会修改机主手机或改变人物关系。<br>收藏保存在当前浏览器；如果担心浏览器清理数据，可以导出 JSON 备份。</div>${S.bookmarks.length?S.bookmarks.map((b,i)=>`<div class="journal-row"><div><span>${h(b.owner)}的手机 · ${h(b.date)} · ${h(b.chat)}</span>${h(b.sender)}：${h(b.text)}</div><button data-action="remove:${i}">取消收藏</button></div>`).join(''):'<div class="empty">还没有收藏的片段。<br>打开微信聊天，点消息旁的 ☆ 就能收藏。</div>'}<button class="primary-action" data-action="export">↓ 导出手账 JSON</button></div></section>`}
+function devices(){
+const days=Array.from({length:WORLD.maxDay+1},(_,d)=>`<button data-action="day:${d}" class="${S.day===d?'selected':''}">${dateFor(d).replace('-','月')}日</button>`).join('');
+return `<section class="app-view devices-view">${bar('切换手机','home')}<div class="scroll"><div class="device-intro"><h2>七部手机，共用一个世界</h2><p>两组既存朋友圈，职业轨道独立展开。<br>无论切换哪部手机，都不会重写已经发生的事情。</p></div><div class="device-grid">${Object.entries(CHARACTERS).map(([id,c])=>`<div class="device-card ${S.owner===id?'chosen':''}">${avatar(id)}<div style="flex:1"><button data-action="owner:${id}" style="border:0;background:none;text-align:left;padding:0;display:block"><strong>${h(c.name)}</strong><small>${h(c.job)}</small></button><button class="avatar-upload" data-action="pickavatar:${id}">${WORLD.avatars[id]?'更换头像':'导入头像'}</button></div></div>`).join('')}</div><div class="day-switch"><h3>世界时间</h3><p>10月12日至13日为预装历史。从10月14日起，每点击一次才由 AI 续写一天，不会因为打开微信自动跳时间。</p><div class="options">${days}</div><button class="advance-wide" style="margin-top:14px;background:#544b72;color:white" data-action="advance" ${WORLD.busy?'disabled':''}>${WORLD.busy?'AI 正在续写…':S.day<WORLD.maxDay?'查看下一天':'✦ 继续一天'}</button><p>AI：${WORLD.ready?(WORLD.configured?'已配置':'未配置'):'连接中'} · ${h(WORLD.model||'')}</p><button data-action="backup">↓ 导出世界事件备份 JSON</button></div><div style="height:30px"></div></div></section>`}
+function render(){const isHome=S.app==='home';$('status').className=`status ${isHome?'home-status':'app-status'}`;$('status').innerHTML=`<span>${timeNow()}</span><span class="icons">▮▮▮ ᴡɪꜰɪ ▰</span>`;$('indicator').className=`home-indicator ${isHome?'home-bottom':''}`;const routes={home,wechat,chat:chatView,weibo,albums:album,photo,notes,note,calendar,music,journal,devices};$('view').innerHTML=(routes[S.app]||home)();if(S.app==='chat'){const sc=$('message-scroll');requestAnimationFrame(()=>{if(sc)sc.scrollTop=sc.scrollHeight})}}
+function goto(app){S.app=app;S.search='';render()}
+function handle(action){const [name,arg]=action.split(':');if(name==='advance'){advanceDay();return}if(name==='pickavatar'){pickAvatar(arg);return}if(name==='backup'){downloadBackup();return}if(name==='app'){if(arg==='wechat')S.tab='chats';if(arg==='weibo')S.wtab='feed';goto(arg);return}if(name==='home'){goto('home');return}if(name==='back'){goto(arg);return}if(name==='chat'){S.chat=arg;goto('chat');return}if(name==='tab'){S.tab=arg;S.search='';render();return}if(name==='wtab'){S.wtab=arg;render();return}if(name==='owner'){S.owner=arg;save();goto('home');return}if(name==='day'){S.day=Math.min(WORLD.maxDay,Math.max(0,Number(arg)));save();render();return}if(name==='photo'){S.imageIndex=Number(arg);goto('photo');return}if(name==='note'){S.noteIndex=Number(arg);goto('note');return}if(name==='bookmark'){
+ const chat=CG[S.chat],index=Number(arg),m=filtered(chat.messages)[index];if(!m)return;const id=`${S.chat}:${m[0]}:${m[1]}:${m[2]}:${index}`;const pos=S.bookmarks.findIndex(x=>x.id===id);if(pos>=0){S.bookmarks.splice(pos,1);persistToast('已取消收藏')}else{S.bookmarks.push({id,owner:CHARACTERS[S.owner].name,date:m[0]+' '+m[1],chat:chatTitle(S.chat),sender:displayName(m[2]),text:m[3]});persistToast('已收藏到我的手账')}save();const sc=$('message-scroll'),v=sc?.scrollTop;render();if($('message-scroll'))$('message-scroll').scrollTop=v;return
+ }if(name==='remove'){S.bookmarks.splice(Number(arg),1);save();render();return}if(name==='comments'){S.commentId=S.commentId===arg?'':arg;let scroll=$('view').querySelector('.scroll'),pos=scroll?.scrollTop;render();if($('view').querySelector('.scroll'))$('view').querySelector('.scroll').scrollTop=pos;return}if(name==='hot'){persistToast('虚构热搜话题 · 试玩档暂仅展示榜单');return}if(name==='track'){persistToast('试听功能留待正式版本');return}if(name==='export'){const b=new Blob([JSON.stringify({game:'镜头之外·观察档',bookmarks:S.bookmarks},null,2)],{type:'application/json'});const url=URL.createObjectURL(b);let a=document.createElement('a');a.href=url;a.download='镜头之外-我的手账.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);persistToast('手账已导出');return}}
+$('view').addEventListener('click',e=>{const el=e.target.closest('[data-action]');if(el)handle(el.dataset.action)});
+$('view').addEventListener('input',e=>{if(e.target.dataset.input==='chat-search'){S.search=e.target.value;const old=e.target.selectionStart;const view=$('view');const sc=$('wc-scroll'),y=sc?.scrollTop||0;render();const next=view.querySelector('[data-input="chat-search"]');if(next){next.focus();next.setSelectionRange(old,old);$('wc-scroll').scrollTop=y}}});
+
+function applyWorld(payload){
+ WORLD.maxDay=Math.max(1,Number(payload.max_day)||1);
+ if(!prefsHydrated){
+   if(payload.user_state){const p=payload.user_state;
+     if(CHARACTERS[p.owner]) S.owner=p.owner;
+     if(Number.isInteger(p.day)) S.day=Math.min(WORLD.maxDay,Math.max(0,p.day));
+     if(Array.isArray(p.bookmarks)) S.bookmarks=p.bookmarks;
+   }
+   prefsHydrated=true;
+ }
+ WORLD.avatars={...WORLD.avatars,...(payload.avatars||{})};
+ WORLD.batches=Array.isArray(payload.generations)?payload.generations:[];
+ WORLD.configured=!!payload.configured;WORLD.model=payload.model||'';
+ for(const batch of WORLD.batches){
+   for(const chat of batch.new_chats||[]){
+     if(!CG[chat.id])CG[chat.id]={title:chat.title,members:chat.members,messages:[]};
+     for(const id of chat.members) if(USER_CHAT_IDS[id]&&!USER_CHAT_IDS[id].includes(chat.id))USER_CHAT_IDS[id].push(chat.id);
+   }
+   for(const ev of batch.events||[]){
+     for(const m of ev.messages||[]){
+       if(GENERATED_APPLIED.has(m.id))continue;
+       if(!CG[m.chat_id])continue;
+       CG[m.chat_id].messages.push([m.day.slice(5),m.time,m.sender,m.text,m.id]);
+       GENERATED_APPLIED.add(m.id);
+     }
+     for(const p of ev.posts||[]){
+       if(GENERATED_APPLIED.has(p.id))continue;
+       POSTS.push({id:p.id,by:p.author,at:`${p.day.slice(5)} ${p.time}`,txt:p.text,comments:[],like:'0'});
+       GENERATED_APPLIED.add(p.id);
+     }
+   }
+ }
+ for(const chat of Object.values(CG))chat.messages.sort((a,b)=>a[0].localeCompare(b[0])||a[1].localeCompare(b[1]));
+ if(S.day>WORLD.maxDay)S.day=WORLD.maxDay;
+ WORLD.ready=true; WORLD.status='online';save();render();
+}
+async function apiFetch(path,options={}){
+ const headers={...(options.headers||{}),'X-Game-Pin':apiPin};
+ const res=await fetch(path,{...options,headers,cache:'no-store'});
+ const payload=await res.json().catch(()=>({error:`服务端返回 HTTP ${res.status}`}));
+ if(res.status===401){if(location.protocol==='https:'){location.replace('/login');throw Error('请重新登录')}showGate('PIN 尚未验证，或输入错误');throw Error('PIN 校验失败')}
+ if(!res.ok)throw Error(payload.error||`请求失败（${res.status}）`);
+ return payload;
+}
+function showGate(msg=''){$('gate').hidden=false;$('pin-error').textContent=msg;}
+async function hydrate(){
+ try{const data=await apiFetch('/api/state');applyWorld(data);$('gate').hidden=true;}
+ catch(err){WORLD.ready=false;WORLD.status='error';console.info('World sync unavailable:',err.message);render()}
+}
+async function advanceDay(){
+ if(WORLD.busy)return;
+ if(S.day<WORLD.maxDay){S.day++;save();render();return;}
+ if(!WORLD.ready){persistToast('请先连接到游戏后端');showGate('后端没有连接，或游戏 PIN 尚未验证');return}
+ if(!WORLD.configured){persistToast('OpenAI API Key 尚未配置，请在 Mac 启动环境中设置');return}
+ WORLD.busy=true;render();
+ try{
+  const expected=new Date(Date.UTC(2030,9,12+WORLD.maxDay)).toISOString().slice(0,10);
+  const data=await apiFetch('/api/advance',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({expected_day:expected})});
+  applyWorld(data);
+  if(!data.cached) {S.day=WORLD.maxDay;save();}
+  persistToast(data.cached?'已恢复现有历史，不重复生成':'新的一天已保存到世界账本');
+ }catch(err){persistToast('生成失败：'+err.message);console.warn('World generation:',err.message);}
+ finally{WORLD.busy=false;render()}
+}
+async function downloadBackup(){
+ try{
+  const data=await apiFetch('/api/backup');
+  data.local_bookmarks=S.bookmarks;
+  const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));
+  const a=document.createElement('a');a.href=url;a.download='镜头之外-世界事件备份.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);
+  persistToast('世界账本已导出');
+ }catch(err){persistToast('导出失败：'+err.message)}
+}
+let targetAvatar='';
+function pickAvatar(id){targetAvatar=id;$('avatar-picker').click()}
+$('avatar-picker').addEventListener('change',async e=>{
+ const f=e.target.files?.[0];if(!f||!targetAvatar)return;
+ try{
+  if(!f.type.startsWith('image/'))throw Error('请选择图片');
+  // iPhone originals are often too large. Create a 512px avatar crop locally; no face retouching.
+  const bitmap=await createImageBitmap(f);
+  const cv=document.createElement('canvas');cv.width=cv.height=512;
+  const ctx=cv.getContext('2d');const side=Math.min(bitmap.width,bitmap.height);
+  ctx.drawImage(bitmap,(bitmap.width-side)/2,(bitmap.height-side)/2,side,side,0,0,512,512);
+  bitmap.close?.();
+  const blob=await new Promise(resolve=>cv.toBlob(resolve,'image/jpeg',.9));
+  const response=await apiFetch('/api/avatar',{method:'POST',headers:{'Content-Type':'image/jpeg','X-Person-Id':targetAvatar},body:blob});
+  WORLD.avatars={...WORLD.avatars,...response.avatars};render();persistToast('头像已保存到游戏服务器');
+ }catch(err){persistToast('上传失败：'+err.message)}
+ finally{e.target.value='';targetAvatar=''}
+});
+$('pin-submit').addEventListener('click',async()=>{
+ apiPin=$('pin-input').value.trim();try{sessionStorage.setItem('jtz-pin',apiPin)}catch{}
+ $('pin-submit').disabled=true;
+ try{await hydrate();if(!$('gate').hidden)$('pin-error').textContent='PIN 错误或后端未运行';}
+ finally{$('pin-submit').disabled=false;}
+});
+$('pin-input').addEventListener('keydown',e=>{if(e.key==='Enter')$('pin-submit').click()});
+render();hydrate();
+</script>
+</body></html>
