@@ -1,0 +1,30 @@
+
+services:
+  - type: web
+    name: jingtou-zhiwai-private
+    runtime: docker
+    plan: 0.5c-512mb
+    region: virginia
+    rootDir: jingtou-zhiwai-render-ready
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    disk:
+      name: found-phone-world
+      mountPath: /app/data
+      sizeGB: 1
+    envVars:
+      - key: CLOUD_MODE
+        value: "1"
+      - key: HOST
+        value: "0.0.0.0"
+      - key: DATA_DIR
+        value: /app/data
+      - key: OPENAI_MODEL
+        value: gpt-4.1-mini
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: GAME_PIN
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+  
